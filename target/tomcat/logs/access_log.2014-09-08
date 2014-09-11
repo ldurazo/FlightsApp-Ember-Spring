@@ -1,0 +1,2 @@
+127.0.0.1 - - [08/Sep/2014:17:49:13 -0700] "GET /mvn-webapp-flights/welcome HTTP/1.1" 500 3205 http-bio-8080-exec-1 487
+127.0.0.1 - - [08/Sep/2014:17:52:14 -0700] "GET /mvn-webapp-flights/welcome HTTP/1.1" 500 3205 http-bio-8080-exec-1 514

@@ -1,0 +1,9 @@
+127.0.0.1 - - [10/Sep/2014:15:32:01 -0700] "GET /mvn-webapp-flights/welcome HTTP/1.1" 200 80 http-bio-8080-exec-1 937
+127.0.0.1 - - [10/Sep/2014:15:32:01 -0700] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-3 0
+127.0.0.1 - - [10/Sep/2014:15:32:05 -0700] "GET /mvn-webapp-flights/welcome/asdf HTTP/1.1" 404 949 http-bio-8080-exec-4 3
+127.0.0.1 - - [10/Sep/2014:15:42:49 -0700] "GET /mvn-webapp-flights/welcome/ HTTP/1.1" 200 80 http-bio-8080-exec-6 5
+127.0.0.1 - - [10/Sep/2014:19:19:41 -0700] "GET /mvn-webapp-flights/ HTTP/1.1" 404 949 http-bio-8080-exec-9 2
+127.0.0.1 - - [10/Sep/2014:19:20:18 -0700] "GET /mvn-webapp-flights/WEB/-INF/pages/flights.html HTTP/1.1" 404 949 http-bio-8080-exec-1 94
+127.0.0.1 - - [10/Sep/2014:19:20:58 -0700] "GET /mvn-webapp-flights/flights.html HTTP/1.1" 404 949 http-bio-8080-exec-3 2
+127.0.0.1 - - [10/Sep/2014:19:22:35 -0700] "GET /mvn-webapp-flights/pages/flights.html HTTP/1.1" 404 949 http-bio-8080-exec-6 3
+127.0.0.1 - - [10/Sep/2014:19:32:20 -0700] "GET /mvn-webapp-flights/welcome/ HTTP/1.1" 404 - http-bio-8080-exec-1 0
