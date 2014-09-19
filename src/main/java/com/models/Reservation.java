@@ -8,7 +8,10 @@ public class Reservation {
     private String name;
     private String last_name;
     private List<Flight> flights;
-    private double price;
+    private String origin;
+    private String destination;
+    private String cost;
+    private String email;
 
     public long getId() {
         return id;
@@ -30,6 +33,10 @@ public class Reservation {
         return last_name;
     }
 
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
     public List<Flight> getFlights() {
         return flights;
     }
@@ -38,16 +45,35 @@ public class Reservation {
         this.flights = flights;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-
+    public String getOrigin() {
+        return origin;
     }
 
-    public double getPrice() {
-        return price;
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
