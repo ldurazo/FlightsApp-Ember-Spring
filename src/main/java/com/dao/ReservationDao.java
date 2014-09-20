@@ -14,7 +14,6 @@ import java.sql.SQLException;
 @SuppressWarnings("unused")
 public class ReservationDao {
 
-
     private DataSource dataSource;
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -28,9 +27,9 @@ public class ReservationDao {
         return dataSource;
     }
 
-    public Reservation saveReservation(Reservation reservation) {
+    public Boolean saveReservation(Reservation reservation) {
         String query = "INSERT INTO RESERVATIONS" +
-                    "VALUES(null, ?, ?, ?, ?, ?,?)";
+                    "VALUES(null, ?, ?, ?, ?, ?, ?)";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -40,10 +39,11 @@ public class ReservationDao {
             preparedStatement.setString(4, reservation.getDestination());
             preparedStatement.setString(5, reservation.getCost());
             preparedStatement.setString(6, reservation.getEmail());
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return null;
     }
 
 }

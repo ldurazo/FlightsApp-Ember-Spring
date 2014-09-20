@@ -22,6 +22,7 @@ client = Mysql2::Client.new(:host => "localhost", :username => "root", :password
           city = city.gsub("'", %q(_))
           client.query("INSERT INTO AIRPORTS VALUES(null, '#{iata}' , '#{latitude}' , '#{longitude}', '#{name}', '#{city}')")
   end
+  print "loading finished"
   client.close
 end
 
