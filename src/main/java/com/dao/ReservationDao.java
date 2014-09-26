@@ -27,7 +27,7 @@ public class ReservationDao {
         return dataSource;
     }
 
-    public Boolean saveReservation(Reservation reservation) {
+    public int saveReservation(Reservation reservation) {
         String query = "INSERT INTO RESERVATIONS" +
                     "VALUES(null, ?, ?, ?, ?, ?, ?)";
         try {
@@ -39,10 +39,11 @@ public class ReservationDao {
             preparedStatement.setString(4, reservation.getDestination());
             preparedStatement.setString(5, reservation.getCost());
             preparedStatement.setString(6, reservation.getEmail());
-            return true;
+            preparedStatement.execute();
+            return reservation.getId();
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
     }
 
