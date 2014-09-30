@@ -1,0 +1,40 @@
+<body>
+    <nav class="col-md-3" id="main-form">
+        <form action="" id="search-form">
+            <label for="one-way">One Way</label>
+            <input type="radio" name="flight-type" id="one-way"/>
+            <label for="round-trip">Round trip</label>
+            <input type="radio" name="flight-type" id="round-trip"/>
+            <hr/>
+            <label for="">From:</label>
+            <input type="text" class="form-control" placeholder="Departure city"/>
+            <label for="">To:</label>
+            <input type="text" class="form-control" placeholder="Arrival city"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="departure-date">Departure:</label>
+                    <input type="date" class="form-control" id="departure-date"/>
+                </div>
+                <div class="col-md-6">
+                    <label for="returning-date">Return:</label>
+                    <input type="date" class="form-control" id="returning-date"/>
+                </div>
+            </div>
+            <input type="submit" value="Search" class="btn" id="search-btn"/>
+        </form>
+     </nav>
+    <div id="main-container" class="col-md-8">
+        <ul id="todo-list">
+            {{#each}}
+                <li>
+                    <label>{{departureIATA}}</label>
+                    <label>{{destinationIATA}}</label>
+                    <label>{{departuretime}}</label>
+                    <label>{{destinationtime}}</label>
+                    <label>{{departurecity}}</label>
+                    <label>{{price}}</label>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</body>
