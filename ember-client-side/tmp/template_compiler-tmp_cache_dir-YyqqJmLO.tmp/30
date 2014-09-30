@@ -1,0 +1,10 @@
+import Ember from 'ember';
+export default Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("    <div class=\"header 1\">\n        <h1>Flights webapp</h1>\n    </div>\n    <div class=\"input-group\">\n      <span class=\"input-group-addon\">\n            Round trip:\n        <input type=\"radio\" name=\"Round trip\">\n            One way trip:\n        <input type=\"radio\" name=\"Round trip\">\n      </span>\n    </div>\n        <form>\n            Departure location:\n            <button type=\"button\" class=\"btn\" name=\"search_button_departure\">Search!</button>\n        </form>\n        <form>\n            date of departure:\n            <input type=\"date\" name=\"departure_date_search\">\n        </form>\n        <button type=\"button\" name=\"search_button\">Search!</button>\n        <ul>\n            <li>Flight 1</li>\n            <li>Flight 2</li>\n            <li>Flight 3</li>\n        </ul>\n        <form>\n            date of departure:\n            <input type=\"date\" name=\"return_date_search\">\n        </form>\n        <button type=\"button\" class=\"btn\" name=\"search_button\">Search!</button>\n");
+  
+});

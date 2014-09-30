@@ -1,0 +1,10 @@
+import Ember from 'ember';
+export default Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("<body>\n    <nav class=\"col-md-3\" id=\"main-form\">\n        <form action=\"\">\n            <label for=\"\">From:</label>\n            <input type=\"text\" class=\"form-control\" placeholder=\"Departure city\"/>\n            <label for=\"\">To:</label>\n            <input type=\"text\" class=\"form-control\" placeholder=\"Arrival city\"/>\n            <div class=\"btn-group\">\n                <button type=\"button\" class=\"btn btn-default\">Left</button>\n                <button type=\"button\" class=\"btn btn-default\">Right</button>\n            </div>\n        </form>\n     </nav>\n    <div id=\"main-container\" class=\"col-md-8 col-md-offset-1\">\n\n    </div>\n</body>");
+  
+});

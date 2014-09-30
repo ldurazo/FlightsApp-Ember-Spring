@@ -1,0 +1,10 @@
+import Ember from 'ember';
+export default Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("<!--HEADER  -->\n<div class=\"header left\">\n        <h1>Flights webapp</h1>\n </div>\n\n<!--DEPARTURE -->\n <div class=\"row \">\n    <div class=\"col-md-6 section1\">\n        <form>\n            Departure location:\n            <input type=\"text\" class=\"form-control\" placeholder=\"Origin\">\n        </form>\n        <form>\n            Destination location:\n            <input type=\"text\" class=\"form-control\" placeholder=\"Text input\">\n        </form>\n        <form>\n            date of departure:\n            <input type=\"date\" name=\"departure_date_search\">\n        </form>\n        <form>\n            date of return:\n            <input type=\"date\" name=\"departure_date_search\">\n        </form>\n        <input data-provide=\"datepicker\" class=\"datepicker\">\n        <button type=\"button\" class= \"btn btn-primary\" name=\"search_button\">Search!</button>\n    </div>\n\n    <div class=\"col-md-6 section2\">\n        <ul>\n            <li>Flight 1</li>\n            <li>Flight 2</li>\n            <li>Flight 3</li>\n        </ul>\n </div>\n\n\n\n");
+  
+});

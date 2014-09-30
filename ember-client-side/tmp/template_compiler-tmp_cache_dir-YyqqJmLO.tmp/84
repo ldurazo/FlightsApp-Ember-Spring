@@ -1,0 +1,10 @@
+import Ember from 'ember';
+export default Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  
+
+
+  data.buffer.push("<body>\n    <nav class=\"col-md-3\" id=\"main-form\">\n\n    </nav>\n    <div id=\"main-container\" class=\"col-md-9\">\n\n    </div>\n</body>");
+  
+});
