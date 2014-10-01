@@ -14,6 +14,9 @@ App.IndexController = Ember.ArrayController.extend({});
 
 App.FlightsRoute = Ember.Route.extend({});
 
+App.ApplicationController = Ember.ObjectController.extend({
+  passengerslimit: [1,2,3,4,5,6]
+});
 
 App.ApplicationAdapter = DS.FixtureAdapter.extend({
 });

@@ -26,10 +26,30 @@ body{
    text-align: center;
 }
 
+.list-group-item {
+    overflow: hidden;
+}
+
+.dep-iata span {
+    position: relative;
+    left: 25px;
+}
+
+#flight-timestamps {
+    font-size: 10px;
+
+}
+
+
+
+#results-flights{
+   font-weight: 50;
+}
 
 #main-form input{
     margin-bottom:10px;
 }
+
 
 #search-btn{
     width:100%;

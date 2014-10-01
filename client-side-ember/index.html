@@ -15,8 +15,10 @@
           <form action="" id="search-form">
               <label>One Way</label>
               <input type="radio" name="flight-type" id="one-way"/>
-              <label>Round trip</label>
+              <label>Round</label>
               <input type="radio" name="flight-type" id="round-trip"/>
+              <label>Passengers:</label>
+              {{view Ember.Select content=passengerslimit}}
               <hr/>
               <label>From:</label>
               <input type="text" class="form-control" placeholder="Departure city"/>
@@ -35,26 +37,35 @@
               <input type="submit" value="Search" class="btn" id="search-btn"/>
           </form>
       </nav>
-      <div id="container" class="col-sm-8">
+      <div id="container" class="col-md-8">
           {{outlet}}
       </div>
   </script>
 
   <script type="text/x-handlebars" id="index">
-      <div id="main-container" class="col-md-9">
-          <ul id="todo-list">
+          <ul id="flight-list" class="list-group">
               {{#each}}
-              <li>
-                  <label>{{departureIATA}}</label>
-                  <label>{{destinationIATA}}</label>
-                  <label>{{departuretime}}</label>
-                  <label>{{destinationtime}}</label>
-                  <label>{{departurecity}}</label>
-                  <label>{{price}}</label>
+              <li class="list-group-item">
+                  <div class="col-md-5">
+                      <div class="col-md-6 dep-iata">
+                        <span class="label label-info" id="results-flights">{{departureIATA}}</span>
+                        <label id="flight-timestamps">{{departuretime}}</label>
+                      </div>
+                      <div class="col-md-6 dep-iata">
+                      <span class="label label-info" id="results-flights">{{destinationIATA}}</span>
+                      <label id="flight-timestamps">{{destinationtime}}</label>
+                      </div>
+                  </div>
+                  <div class="col-md-5 vertical">
+                      <label id="city-names">{{departurecity}} - </label>
+                      <label id="city-names">{{destinationcity}}</label>
+                  </div>
+                  <div class="col-md-2 vertical">
+                      <label id="price">{{price}}</label>
+                  </div>
               </li>
               {{/each}}
           </ul>
-      </div>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
