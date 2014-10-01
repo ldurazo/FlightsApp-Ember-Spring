@@ -17,7 +17,7 @@ public class RestClient {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         String qpxResponse = null;
         try {
-            HttpPost postRequest = new HttpPost(Properties.QpxSearchFlightsApiAddress);
+            HttpPost postRequest = new HttpPost(Properties.QPX_SEARCH_URI);
             StringEntity params = new StringEntity(jsonStringForRequest);
             postRequest.addHeader("content-type", "application/json");
             postRequest.setEntity(params);
