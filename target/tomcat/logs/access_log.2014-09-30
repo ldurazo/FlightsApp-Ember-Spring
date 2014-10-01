@@ -1,0 +1,4 @@
+127.0.0.1 - - [30/Sep/2014:17:55:38 -0700] "GET /mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-09-19 HTTP/1.1" 200 489 http-bio-8080-exec-1 1911
+127.0.0.1 - - [30/Sep/2014:17:55:39 -0700] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-3 0
+127.0.0.1 - - [30/Sep/2014:17:55:57 -0700] "GET /mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-11-19 HTTP/1.1" 200 102002 http-bio-8080-exec-4 3410
+127.0.0.1 - - [30/Sep/2014:17:56:30 -0700] "GET /mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-11-19 HTTP/1.1" 200 102002 http-bio-8080-exec-6 3874

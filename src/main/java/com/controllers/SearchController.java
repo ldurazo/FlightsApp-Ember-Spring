@@ -32,9 +32,6 @@ public class SearchController {
         String jsonStringForRequest = searchService.getJsonStringForRequest(search);
         String response = searchService.getFlightsAsJsonString(jsonStringForRequest);
 
-
-
-
         return response;
     }
 }
