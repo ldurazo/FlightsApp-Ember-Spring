@@ -7,7 +7,7 @@ App.Router.map(function() {
 App.IndexRoute = Ember.Route.extend({
     model: function() {
         //return this.store.find('Flight');
-        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19",function(data){
+        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19", function(data) {
             return data;
         });
     }
@@ -25,13 +25,7 @@ App.ApplicationAdapter = DS.FixtureAdapter.extend({
 });
 
 App.Flight = DS.Model.extend({
-    departureIATA: DS.attr('string'),
-    destinationIATA: DS.attr('string'),
-    departuretime: DS.attr('string'),
-    destinationtime: DS.attr('string'),
-    departurecity: DS.attr('string'),
-    destinationcity: DS.attr('string'),
-    price: DS.attr('string')
+    kind: DS.attr('string')
 });
 
 App.Flight.reopenClass({

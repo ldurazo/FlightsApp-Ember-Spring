@@ -13,7 +13,7 @@
     </servlet>
 
     <filter>
-        <filter-name>simpleCORSFilter</filter-name>
+        <filter-name>CORSFilter</filter-name>
         <filter-class>com.services.CORSFilter</filter-class>
     </filter>
 

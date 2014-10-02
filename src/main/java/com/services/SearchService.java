@@ -19,8 +19,7 @@ public class SearchService {
     }
 
     public String getJsonStringForRequest(SearchRequest search){
-        String jsonStringForRequest = SearchParser.getJsonStringForSearchRequest(search);
-        return jsonStringForRequest;
+        return SearchParser.getJsonStringForSearchRequest(search);
     }
 
     public String getFlightsAsJsonString(String jsonStringForRequest){
