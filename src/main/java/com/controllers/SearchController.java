@@ -20,18 +20,17 @@ public class SearchController {
     //Dummy link to perform a search with this API
     //http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19
     @RequestMapping(value="/search", produces="application/json")
-    public @ResponseBody String search(@RequestParam(value="origin",      required=true)                      String origin,
-                         @RequestParam(value="destination", required=true)                      String destination,
-                         @RequestParam(value="passengers",  required=true)                      String passengers,
-                         @RequestParam(value="date",        required=true)                      String date,
-                         @RequestParam(value="solutions",   required=false, defaultValue = "10") String solutions) {
+    public @ResponseBody String search(@RequestParam(value="origin",      required=true)                       String origin,
+                         @RequestParam(value="destination",               required=true)                       String destination,
+                         @RequestParam(value="passengers",                required=true)                       String passengers,
+                         @RequestParam(value="date",                      required=true)                       String date,
+                         @RequestParam(value="solutions",                 required=false, defaultValue = "10") String solutions) {
 
         //Logic to parse the parameters as json
         SearchRequest search = new SearchRequest(origin, destination, date, passengers, solutions);
         SearchService searchService = new SearchService();
         String jsonStringForRequest = searchService.getJsonStringForRequest(search);
-        String response = searchService.getFlightsAsJsonString(jsonStringForRequest);
 
-        return response;
+        return searchService.getFlightsAsJsonString(jsonStringForRequest);
     }
 }

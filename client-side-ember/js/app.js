@@ -7,7 +7,7 @@ App.Router.map(function() {
 App.IndexRoute = Ember.Route.extend({
     model: function() {
         //return this.store.find('Flight');
-        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19", function(data) {
+        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=LAX&destination=MEX&passengers=1&date=2014-12-19", function(data) {
             return data;
         });
     }
@@ -25,38 +25,54 @@ App.ApplicationAdapter = DS.FixtureAdapter.extend({
 });
 
 App.Flight = DS.Model.extend({
-    kind: DS.attr('string')
+    saleTotal: DS.attr('string'),
+    slices: DS.hasMany('slice')
 });
 
-App.Flight.reopenClass({
-    FIXTURES: [
-        {
-            id: 1,
-            departureIATA: "SFO",
-            destinationIATA: "LAX",
-            departuretime: "26/06/1991 07:45:00",
-            destinationtime: "26/06/1991 11:45:00",
-            departurecity: "San Francisco",
-            destinationcity: "Los Angeles",
-            price: "789.55"
-        },{
-            id: 2,
-            departureIATA: "MEX",
-            destinationIATA: "SFO",
-            departuretime: "28/12/1991 07:45:00",
-            destinationtime: "29/12/1991 12:45:00",
-            departurecity: "Ciudad de Mexico",
-            destinationcity: "San Francisco",
-            price: "789.55"
-        },{
-            id: 3,
-            departureIATA: "LAX",
-            destinationIATA: "MEX",
-            departuretime: "29/12/2001 07:45:00",
-            destinationtime: "29/12/2001 8:45:00",
-            departurecity: "Los Angeles",
-            destinationcity: "Ciudad de Mexico",
-            price: "789.55"
-        }
-    ]
+App.Slice = DS.Model.extend({
+    segments: DS.hasMany('segment')
 });
+
+App.Segment = DS.Model.extend({
+    legs: DS.hasMany('leg')
+});
+
+App.Leg = DS.Model.extend({
+    arrivalTime: DS.attr('string'),
+    departureTime: DS.attr('string'),
+    origin: DS.attr('string'),
+    destination: DS.attr('string')
+});
+
+//App.Flight.reopenClass({
+//    FIXTURES: [
+//        {
+//            id: 1,
+//            departureIATA: "SFO",
+//            destinationIATA: "LAX",
+//            departuretime: "26/06/1991 07:45:00",
+//            destinationtime: "26/06/1991 11:45:00",
+//            departurecity: "San Francisco",
+//            destinationcity: "Los Angeles",
+//            price: "789.55"
+//        },{
+//            id: 2,
+//            departureIATA: "MEX",
+//            destinationIATA: "SFO",
+//            departuretime: "28/12/1991 07:45:00",
+//            destinationtime: "29/12/1991 12:45:00",
+//            departurecity: "Ciudad de Mexico",
+//            destinationcity: "San Francisco",
+//            price: "789.55"
+//        },{
+//            id: 3,
+//            departureIATA: "LAX",
+//            destinationIATA: "MEX",
+//            departuretime: "29/12/2001 07:45:00",
+//            destinationtime: "29/12/2001 8:45:00",
+//            departurecity: "Los Angeles",
+//            destinationcity: "Ciudad de Mexico",
+//            price: "789.55"
+//        }
+//    ]
+//});

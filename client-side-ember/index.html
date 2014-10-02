@@ -11,6 +11,7 @@
 <body>
   <script type="text/x-handlebars">
     <h2>Flights webapp</h2>
+      <hr/>
       <nav class="col-md-3" id="main-form">
           <form action="" id="search-form">
               <label>One Way</label>
@@ -46,25 +47,23 @@
           <ul id="flight-list" class="list-group">
               {{#each}}
               <li class="list-group-item">
-                  <div class="col-md-5">
-                      <div class="col-md-6 dep-iata">
-                        <span class="label label-info" id="results-flights">{{departureIATA}}</span>
-                        <label id="flight-timestamps">{{departuretime}}</label>
-                      </div>
-                      <div class="col-md-6 dep-iata">
-                      <span class="label label-info" id="results-flights">{{destinationIATA}}</span>
-                      <label id="flight-timestamps">{{destinationtime}}</label>
-                      </div>
-                  </div>
-                  <div class="col-md-5 vertical">
-                      <label id="city-names">{{departurecity}} - </label>
-                      <label id="city-names">{{destinationcity}}</label>
-                  </div>
+                <div class="col-md-10">
+                {{#each slice}}
+                    {{#each segment}}
+                         {{#each leg}}-
+                           <span class="label label-info" id="results-flights">{{origin}}</span>
+                           <label id="flight-timestamps">{{departureTime}}</label>
+                           <span class="label label-info" id="results-flights">{{destination}}</span>
+                           <label id="flight-timestamps">{{arrivalTime}}</label>
+                          {{/each}}
+                    {{/each}}
+                  {{/each}}
+                </div>
                   <div class="col-md-2 vertical">
-                      <label id="price">{{kind}}</label>
+                      <label id="price">{{saleTotal}}</label>
                   </div>
               </li>
-              {{/each}}
+            {{/each}}
           </ul>
   </script>
 
