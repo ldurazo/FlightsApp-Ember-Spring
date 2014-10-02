@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
 
     //Dummy link to perform a search with this API
-    //http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-09-19
-    @RequestMapping("/search")
+    //http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19
+    @RequestMapping(value="/search", produces="application/json")
     public @ResponseBody String search(@RequestParam(value="origin",      required=true)                      String origin,
                          @RequestParam(value="destination", required=true)                      String destination,
                          @RequestParam(value="passengers",  required=true)                      String passengers,

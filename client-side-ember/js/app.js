@@ -6,7 +6,10 @@ App.Router.map(function() {
 
 App.IndexRoute = Ember.Route.extend({
     model: function() {
-        return this.store.find('Flight');
+        //return this.store.find('Flight');
+        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19",function(data){
+            return data;
+        });
     }
 });
 
