@@ -13,6 +13,7 @@ public class Flight {
     private Date arrival_date;
     private String departure_airport;
     private String arrival_airport;
+    private int travel_minutes;
 
     public long getId() {
         return id;
@@ -69,8 +70,5 @@ public class Flight {
     public void setTravel_minutes(int travel_minutes) {
         this.travel_minutes = travel_minutes;
     }
-
-    private int travel_minutes;
-
 
 }

@@ -1,4 +1,4 @@
-package com.services;
+package com.CORSFilter;
 
 import java.io.IOException;
 import javax.servlet.Filter;

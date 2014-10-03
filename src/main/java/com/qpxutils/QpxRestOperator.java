@@ -1,18 +1,21 @@
-package com.utils;
+package com.qpxutils;
 
+import com.utils.Properties;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class RestClient {
-    public static String getFlightsFromQpxAsJsonString(String jsonStringForRequest){
+@Component
+public class QpxRestOperator {
+    public String getFlightsFromQpxAsJsonString(String jsonStringForRequest){
         //logic to ask for response to QPX API
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         String qpxResponse = null;

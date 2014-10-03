@@ -1,29 +1,36 @@
 package com.services;
 
-import com.models.SearchRequest;
-import com.models.qpxModel.TripOption;
+import com.models.SearchRequestModel;
+import com.models.TripOption;
 import com.utils.GlobalObjectMapper;
-import com.utils.RestClient;
-import com.utils.SearchParser;
+import com.qpxutils.QpxRestOperator;
+import com.qpxutils.JsonRequestParser;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 
+@Service
 public class SearchService {
-    private ObjectMapper objectMapper;
 
-    public SearchService() {
-        objectMapper = GlobalObjectMapper.getInstance();
+    private GlobalObjectMapper objectMapper ;
+
+    private QpxRestOperator qpxRestOperator;
+
+    @Autowired
+    public SearchService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator) {
+        this.objectMapper = objectMapper;
+        this.qpxRestOperator = qpxRestOperator;
     }
 
-    public String getJsonStringForRequest(SearchRequest search){
-        return SearchParser.getJsonStringForSearchRequest(search);
+    public String getJsonStringForRequest(SearchRequestModel searchRequestModel){
+        return JsonRequestParser.createJsonStringSearchRequest(searchRequestModel);
     }
 
     public String getFlightsAsJsonString(String jsonStringForRequest){
-        String qpxResponse = RestClient.getFlightsFromQpxAsJsonString(jsonStringForRequest);
+        String qpxResponse = qpxRestOperator.getFlightsFromQpxAsJsonString(jsonStringForRequest);
         try {
             JsonNode node = objectMapper.readTree(qpxResponse);
             node = node.get("trips").get("tripOption");
@@ -34,6 +41,4 @@ public class SearchService {
         }
         return qpxResponse;
     }
-
-
 }

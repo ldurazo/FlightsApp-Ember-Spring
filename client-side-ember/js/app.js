@@ -6,10 +6,18 @@ App.Router.map(function() {
 
 App.IndexRoute = Ember.Route.extend({
     model: function() {
+        //Uncomment this, this is the model that should be retrieved
         //return this.store.find('Flight');
-        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=LAX&destination=MEX&passengers=1&date=2014-12-19", function(data) {
-            return data;
-        });
+
+        //Uncomment this to make calls to the API directly
+//        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=LAX&destination=MEX&passengers=1&date=2014-12-19", function(data) {
+//            return data;
+//        });
+
+        //this code retrieves a dummy json instead of callin the API (remember that the response from this link requires a Access-Control-Allow-Origin: * header)
+        return $.getJSON("http://www.mocky.io/v2/542f03d5f190d8220c26e891", function(data) {
+                    return data;
+                });
     }
 });
 
@@ -43,36 +51,3 @@ App.Leg = DS.Model.extend({
     origin: DS.attr('string'),
     destination: DS.attr('string')
 });
-
-//App.Flight.reopenClass({
-//    FIXTURES: [
-//        {
-//            id: 1,
-//            departureIATA: "SFO",
-//            destinationIATA: "LAX",
-//            departuretime: "26/06/1991 07:45:00",
-//            destinationtime: "26/06/1991 11:45:00",
-//            departurecity: "San Francisco",
-//            destinationcity: "Los Angeles",
-//            price: "789.55"
-//        },{
-//            id: 2,
-//            departureIATA: "MEX",
-//            destinationIATA: "SFO",
-//            departuretime: "28/12/1991 07:45:00",
-//            destinationtime: "29/12/1991 12:45:00",
-//            departurecity: "Ciudad de Mexico",
-//            destinationcity: "San Francisco",
-//            price: "789.55"
-//        },{
-//            id: 3,
-//            departureIATA: "LAX",
-//            destinationIATA: "MEX",
-//            departuretime: "29/12/2001 07:45:00",
-//            destinationtime: "29/12/2001 8:45:00",
-//            departurecity: "Los Angeles",
-//            destinationcity: "Ciudad de Mexico",
-//            price: "789.55"
-//        }
-//    ]
-//});

@@ -1,78 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Ember Starter Kit</title>
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/app.css">
+    <meta charset="utf-8">
+    <title>Ember Starter Kit</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <script type="text/x-handlebars">
+<script type="text/x-handlebars">
     <h2>Flights webapp</h2>
-      <hr/>
-      <nav class="col-md-3" id="main-form">
-          <form action="" id="search-form">
-              <label>One Way</label>
-              <input type="radio" name="flight-type" id="one-way"/>
-              <label>Round</label>
-              <input type="radio" name="flight-type" id="round-trip"/>
-              <label>Passengers:</label>
-              {{view Ember.Select content=passengerslimit}}
-              <hr/>
-              <label>From:</label>
-              <input type="text" class="form-control" placeholder="Departure city"/>
-              <label>To:</label>
-              <input type="text" class="form-control" placeholder="Arrival city"/>
-              <div class="row">
-                  <div class="col-md-6">
-                      <label>Departure:</label>
-                      <input type="date" class="form-control" id="departure-date"/>
-                  </div>
-                  <div class="col-md-6">
-                      <label>Return:</label>
-                      <input type="date" class="form-control" id="returning-date"/>
-                  </div>
-              </div>
-              <input type="submit" value="Search" class="btn" id="search-btn"/>
-          </form>
-      </nav>
-      <div id="container" class="col-md-8">
-          {{outlet}}
-      </div>
-  </script>
+    <hr/>
+    <nav class="col-md-3" id="main-form">
+        <form action="" id="search-form">
+            <label>One Way</label>
+            <input type="radio" name="flight-type" id="one-way" />
+            <label>Round</label>
+            <input type="radio" name="flight-type" id="round-trip" />
+            <label>Passengers:</label>
+            {{view Ember.Select content=passengerslimit}}
+            <hr />
+            <label>From:</label>
+            <input type="text" class="form-control" placeholder="Departure city"/>
+            <label>To:</label>
+            <input type="text" class="form-control" placeholder="Arrival city" />
 
-  <script type="text/x-handlebars" id="index">
-          <ul id="flight-list" class="list-group">
-              {{#each}}
-              <li class="list-group-item">
-                <div class="col-md-10">
-                {{#each slice}}
-                    {{#each segment}}
-                         {{#each leg}}-
-                           <span class="label label-info" id="results-flights">{{origin}}</span>
-                           <label id="flight-timestamps">{{departureTime}}</label>
-                           <span class="label label-info" id="results-flights">{{destination}}</span>
-                           <label id="flight-timestamps">{{arrivalTime}}</label>
-                          {{/each}}
-                    {{/each}}
-                  {{/each}}
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Departure:</label>
+                    <input type="date" class="form-control" id="departure-date"/>
                 </div>
-                  <div class="col-md-2 vertical">
-                      <label id="price">{{saleTotal}}</label>
-                  </div>
-              </li>
-            {{/each}}
-          </ul>
-  </script>
+                <div class="col-md-6">
+                    <label>Return:</label>
+                    <input type="date" class="form-control" id="returning-date"/>
+                </div>
+            </div>
+            <input type="submit" value="Search" class="btn" id="search-btn"/>
+        </form>
+    </nav>
+    <div id="container" class="col-md-8">
+        {{outlet}}
+    </div>
+</script>
 
-  <script src="js/libs/jquery-1.10.2.js"></script>
-  <script src="js/libs/handlebars-1.1.2.js"></script>
-  <script src="js/libs/ember-1.7.0.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.10/ember-data.min.js"></script>
-  <script src="js/app.js"></script>
-  <!-- to activate the test runner, add the "?test" query string parameter -->
-  <script src="tests/runner.js"></script>
+<script type="text/x-handlebars" id="index">
+    <ul id="flight-list" class="list-group">
+        {{#each}}
+        <li class="list-group-item">
+            <div class="col-md-10">
+                {{#each slice}}
+                {{#each segment}}
+                {{#each leg}}
+                    <span class="label label-info" id="results-flights">{{origin}}</span>
+                    <label id="flight-timestamps">{{departureTime}}</label>
+                    <span class="label label-info" id="results-flights">{{destination}}</span>
+                    <label id="flight-timestamps">{{arrivalTime}}</label>
+                <hr/>
+                {{/each}}
+                {{/each}}
+                {{/each}}
+            </div>
+            <div class="col-md-2 vertical">
+                <label id="price">{{saleTotal}}</label>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+
+<script src="js/libs/jquery-1.10.2.js"></script>
+<script src="js/libs/handlebars-1.1.2.js"></script>
+<script src="js/libs/ember-1.7.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.10/ember-data.min.js"></script>
+<script src="js/app.js"></script>
+<!-- to activate the test runner, add the "?test" query string parameter -->
+<script src="tests/runner.js"></script>
 </body>
 </html>

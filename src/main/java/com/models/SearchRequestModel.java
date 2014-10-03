@@ -3,9 +3,9 @@ package com.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SearchRequest {
+public class SearchRequestModel {
 
-    public SearchRequest(String origin, String destination, String date, String adultCount, String solutions) {
+    public SearchRequestModel(String origin, String destination, String date, String adultCount, String solutions) {
         this.request = new HashMap<String, Object>();
         this.slice[0] = new Slice(origin, destination, date);
         this.passengers = new Passenger(adultCount);

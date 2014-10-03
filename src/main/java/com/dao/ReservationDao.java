@@ -11,12 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Component
-@SuppressWarnings("unused")
 public class ReservationDao {
 
     private DataSource dataSource;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public static final int NAME_COLUMN=1;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -33,7 +35,7 @@ public class ReservationDao {
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, reservation.getName());
+            preparedStatement.setString(NAME_COLUMN, reservation.getName());
             preparedStatement.setString(2, reservation.getLast_name());
             preparedStatement.setString(3, reservation.getOrigin());
             preparedStatement.setString(4, reservation.getDestination());

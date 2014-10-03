@@ -14,7 +14,7 @@
 
     <filter>
         <filter-name>CORSFilter</filter-name>
-        <filter-class>com.services.CORSFilter</filter-class>
+        <filter-class>com.CORSFilter.CORSFilter</filter-class>
     </filter>
 
     <filter-mapping>
