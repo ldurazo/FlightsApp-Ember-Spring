@@ -4,11 +4,11 @@ require 'rubygems'
 require 'json'
 require 'rest-client' 
 require 'uri'
-require 'mysql2'
+require 'pg'
 
 begin
 
-client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "root" , :database => "flights")
+client = PG::Connection.open(:host => "localhost", :user => "flight", :password => "flight" , :dbname => "flightsapp")
 
   url='https://api.flightstats.com/flex/airports/rest/v1/json/all?appId=e9bf38a8&appKey=75a5f3100db3ee5e2b7fc4bdb5fa222f'
   airportsJson = JSON.parse(RestClient.get(url))
@@ -20,7 +20,7 @@ client = Mysql2::Client.new(:host => "localhost", :username => "root", :password
           name = name.gsub("'", %q(_))
           city = airports["city"]
           city = city.gsub("'", %q(_))
-          client.query("INSERT INTO AIRPORTS VALUES(null, '#{iata}' , '#{latitude}' , '#{longitude}', '#{name}', '#{city}')")
+          client.query("INSERT INTO AIRPORTS VALUES(DEFAULT, '#{iata}' , '#{latitude}' , '#{longitude}', '#{name}', '#{city}')")
   end
   print "loading finished"
   client.close
