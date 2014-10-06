@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -30,7 +27,7 @@ public class SearchController {
 
     //Dummy link to perform a search with this API
     //http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19
-    @RequestMapping(value="/search", produces="application/json")
+    @RequestMapping(value="/search", produces="application/json", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<String> search(
                          @RequestParam(value="origin",                    required=true)                       String origin,
                          @RequestParam(value="destination",               required=true)                       String destination,
@@ -45,6 +42,7 @@ public class SearchController {
         HttpHeaders responseHeaders = new HttpHeaders();
         Date currentTime = new Date(System.currentTimeMillis());
         responseHeaders.set("Date", currentTime.toString());
+
         return new ResponseEntity<String>(jsonResponse, responseHeaders, HttpStatus.OK);
     }
 }

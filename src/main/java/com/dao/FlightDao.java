@@ -22,7 +22,7 @@ public class FlightDao {
 
     public int saveFlight(Flight flight){
         //TODO
-        return flight.getFlight_number();
+        return flight.getTravel_minutes();
     }
 
 }

@@ -8,12 +8,23 @@ public class Flight {
 
     private long id;
 
-    private int flight_number;
     private Date departure_date;
     private Date arrival_date;
     private String departure_airport;
     private String arrival_airport;
     private int travel_minutes;
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", departure_date=" + departure_date +
+                ", arrival_date=" + arrival_date +
+                ", departure_airport='" + departure_airport + '\'' +
+                ", arrival_airport='" + arrival_airport + '\'' +
+                ", travel_minutes=" + travel_minutes +
+                '}';
+    }
 
     public long getId() {
         return id;
@@ -21,14 +32,6 @@ public class Flight {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getFlight_number() {
-        return flight_number;
-    }
-
-    public void setFlight_number(int flight_number) {
-        this.flight_number = flight_number;
     }
 
     public Date getDeparture_date() {

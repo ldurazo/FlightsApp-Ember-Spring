@@ -14,11 +14,9 @@ import java.sql.SQLException;
 public class ReservationDao {
 
     private DataSource dataSource;
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public static final int NAME_COLUMN=1;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -31,16 +29,14 @@ public class ReservationDao {
 
     public int saveReservation(Reservation reservation) {
         String query = "INSERT INTO RESERVATIONS" +
-                    "VALUES(null, ?, ?, ?, ?, ?, ?)";
+                    "VALUES(null, ?, ?, ?, ?)";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(NAME_COLUMN, reservation.getName());
-            preparedStatement.setString(2, reservation.getLast_name());
-            preparedStatement.setString(3, reservation.getOrigin());
-            preparedStatement.setString(4, reservation.getDestination());
-            preparedStatement.setString(5, reservation.getCost());
-            preparedStatement.setString(6, reservation.getEmail());
+            preparedStatement.setString(Reservation.NAME_COLUMN, reservation.getName());
+            preparedStatement.setString(Reservation.LAST_NAME_COLUMN, reservation.getLast_name());
+            preparedStatement.setString(Reservation.COST_COLUMN, reservation.getCost());
+            preparedStatement.setString(Reservation.EMAIL_COLUMN, reservation.getEmail());
             preparedStatement.execute();
             return reservation.getId();
         } catch (SQLException e) {
