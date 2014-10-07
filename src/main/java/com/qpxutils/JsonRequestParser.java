@@ -1,16 +1,21 @@
 package com.qpxutils;
 
 import com.models.SearchRequestModel;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
+import com.utils.GlobalObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
 public class JsonRequestParser {
 
-    public static String createJsonStringSearchRequest(SearchRequestModel searchRequestModel){
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT,true);
+    private  GlobalObjectMapper objectMapper;
+
+    @Autowired
+    public JsonRequestParser(GlobalObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public String createJsonStringSearchRequest(SearchRequestModel searchRequestModel) {
         String jsonStringForRequest = null;
         try {
             jsonStringForRequest = objectMapper.writeValueAsString(searchRequestModel);

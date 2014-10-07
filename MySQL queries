@@ -3,8 +3,8 @@ initial steps after installing and running service for postgres db
 to open postgres: install psql
 to login as super user:
 sudo -u postgres psql postgres
-create a database named 'flightsapp'
-create a role/user as 'flight' and password as 'flight' or modify the file airportsScript.rb to your user credentials
+create a database named 'flightsdb'
+create a role/user as 'root' and password as 'root' or modify the file airportsScript.rb to your user credentials
 to that user
 
 on every table

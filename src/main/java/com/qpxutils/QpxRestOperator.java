@@ -1,5 +1,6 @@
 package com.qpxutils;
 
+import com.utils.InputStreamProcessor;
 import com.utils.Properties;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -8,10 +9,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 @Component
 public class QpxRestOperator {
@@ -28,13 +27,7 @@ public class QpxRestOperator {
             HttpResponse response = httpClient.execute(postRequest);
             //Handling response as string
             InputStream inputStream =response.getEntity().getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder output = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
-            qpxResponse = output.toString();
+            qpxResponse = InputStreamProcessor.readStream(inputStream);
         }catch (Exception ex) {
             ex.printStackTrace();
         } finally {

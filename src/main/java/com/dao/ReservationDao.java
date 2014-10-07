@@ -29,7 +29,7 @@ public class ReservationDao {
 
     public int saveReservation(Reservation reservation) {
         String query = "INSERT INTO RESERVATIONS" +
-                    "VALUES(null, ?, ?, ?, ?)";
+                    "VALUES(DEFAULT, ?, ?, ?, ?)";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);

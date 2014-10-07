@@ -16,17 +16,18 @@ import java.util.List;
 public class SearchService {
 
     private GlobalObjectMapper objectMapper ;
-
+    private JsonRequestParser jsonRequestParser;
     private QpxRestOperator qpxRestOperator;
 
     @Autowired
-    public SearchService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator) {
+    public SearchService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator, JsonRequestParser jsonRequestParser) {
         this.objectMapper = objectMapper;
         this.qpxRestOperator = qpxRestOperator;
+        this.jsonRequestParser = jsonRequestParser;
     }
 
     public String getJsonStringForRequest(SearchRequestModel searchRequestModel){
-        return JsonRequestParser.createJsonStringSearchRequest(searchRequestModel);
+        return jsonRequestParser.createJsonStringSearchRequest(searchRequestModel);
     }
 
     public String getFlightsAsJsonString(String jsonStringForRequest){

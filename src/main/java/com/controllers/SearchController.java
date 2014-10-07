@@ -25,8 +25,6 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-    //Dummy link to perform a search with this API
-    //http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19
     @RequestMapping(value="/search", produces="application/json", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<String> search(
                          @RequestParam(value="origin",                    required=true)                       String origin,
