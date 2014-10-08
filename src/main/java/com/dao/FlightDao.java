@@ -1,12 +1,13 @@
 package com.dao;
 
 import com.models.Flight;
+import com.sun.prism.impl.Disposer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
-public class FlightDao {
+public class FlightDao implements Recordable{
     private DataSource dataSource;
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -20,9 +21,13 @@ public class FlightDao {
         return dataSource;
     }
 
-    public int saveFlight(Flight flight){
-        //TODO
-        return flight.getTravel_minutes();
+    @Override
+    public boolean save(Object record) {
+        return false;
     }
 
+    @Override
+    public Object getRecord(int id) {
+        return null;
+    }
 }

@@ -14,10 +14,10 @@ import java.io.InputStream;
 
 @Component
 public class QpxRestOperator {
-    CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
     public String getFlightsFromQpxAsJsonString(String jsonStringForRequest){
         //logic to ask for response to QPX API
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         String qpxResponse = null;
         try {
             HttpPost postRequest = new HttpPost(Properties.QPX_SEARCH_URI);

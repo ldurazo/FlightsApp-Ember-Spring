@@ -7,24 +7,23 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SearchControllerTest {
-    private String uri = "http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19";
-    private TestHttpClient clientForTest;
-    private HttpResponse response;
+    private static String uri = "http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19";
+    private static TestHttpClient clientForTest;
+    private static HttpResponse response;
 
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         clientForTest = new TestHttpClient(uri);
         response = clientForTest.getHttpGetResponse();
         System.out.println(response);

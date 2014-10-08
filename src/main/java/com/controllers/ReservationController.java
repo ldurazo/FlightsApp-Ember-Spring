@@ -1,22 +1,40 @@
 package com.controllers;
 
-import com.dao.ReservationDao;
 import com.models.Reservation;
+import com.services.ReservationService;
+import com.utils.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 
 @RestController
 public class ReservationController {
-public static final String RESERVATION_ENDPOINT = "/reserve";
+    public static final String RESERVATION_ENDPOINT = "/reservation";
+    private ReservationService reservationService;
+
     @Autowired
-    private ReservationDao reservationDao;
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @RequestMapping(value = RESERVATION_ENDPOINT, method = RequestMethod.POST, headers = "Content-Type=application/json")
     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
-        int saveStatus = reservationDao.saveReservation(reservation);
+        boolean saveStatus = reservationService.saveReservation(reservation);
         return new ResponseEntity<String>(String.valueOf(saveStatus), HttpStatus.OK);
     }
+
+    @RequestMapping(value = RESERVATION_ENDPOINT + "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<String> retrieveReservation(@PathVariable int id){
+        String json = null;
+        try {
+            json = reservationService.getReservationAsJson(id);
+            return new ResponseEntity<String>(json, HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<String>(Properties.ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
