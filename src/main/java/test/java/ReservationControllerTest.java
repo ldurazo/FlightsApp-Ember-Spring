@@ -1,4 +1,4 @@
-package test;
+package test.java;
 
 import com.controllers.ReservationController;
 import com.utils.TestHttpClient;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotEquals;
 
 public class ReservationControllerTest {
     private String uri = "http://localhost:8080/mvn-webapp-flights/" + ReservationController.RESERVATION_ENDPOINT;
-    private String jsonString = "{\"name\": \"luis\",\"last_name\":\"Durazo\",\"cost\":\"254.5\",\"email\":\"ldurazo@nearsoft.com\"}";
+    private String jsonString = "{\"name\":\"luis\"}";
     private TestHttpClient clientForTest;
     private HttpResponse response;
 

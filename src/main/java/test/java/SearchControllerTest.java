@@ -1,4 +1,4 @@
-package test;
+package test.java;
 
 import com.models.TripOption;
 import com.utils.InputStreamProcessor;
@@ -12,7 +12,6 @@ import org.junit.Test;
 
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -40,7 +39,7 @@ public class SearchControllerTest {
     @Test
     public void serializeResponse() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        String responseBody = InputStreamProcessor.readStream(response.getEntity().getContent());
+        String responseBody = new InputStreamProcessor().readStream(response.getEntity().getContent());
         System.out.println(responseBody);
         TripOption tripOption = objectMapper.readValue(responseBody, TripOption.class);
         assertNotNull(tripOption);
