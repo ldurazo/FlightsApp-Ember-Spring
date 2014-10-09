@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reservation {
-    public static final int NAME_COLUMN=1;
-    public static final int LAST_NAME_COLUMN=2;
-    public static final int COST_COLUMN = 3;
-    public static final int EMAIL_COLUMN = 4;
+    public static final int ID_COLUMN = 1;
+    public static final int NAME_COLUMN=2;
+    public static final int LAST_NAME_COLUMN=3;
+    public static final int COST_COLUMN = 4;
+    public static final int EMAIL_COLUMN = 5;
 
     private int id;
     private String name;

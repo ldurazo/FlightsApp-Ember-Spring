@@ -20,13 +20,13 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @RequestMapping(value = RESERVATION_ENDPOINT, method = RequestMethod.POST, headers = "Content-Type=application/json")
+    @RequestMapping(value = "/reservation", method = RequestMethod.POST, headers = "Content-Type=application/json")
     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
         boolean saveStatus = reservationService.saveReservation(reservation);
         return new ResponseEntity<String>(String.valueOf(saveStatus), HttpStatus.OK);
     }
 
-    @RequestMapping(value = RESERVATION_ENDPOINT + "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
     public ResponseEntity<String> retrieveReservation(@PathVariable int id){
         String json = null;
         try {

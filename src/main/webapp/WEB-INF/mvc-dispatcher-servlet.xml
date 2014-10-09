@@ -17,7 +17,7 @@
 
     <bean class="com.qpxutils.JsonRequestParser"> </bean>
 
-    <bean class="com.controllers.ReservationController"> </bean>
+    <bean class="com.services.ReservationService"> </bean>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/" />

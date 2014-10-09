@@ -12,13 +12,14 @@ import java.io.IOException;
 public class ReservationService {
     private GlobalObjectMapper objectMapper;
     private QpxRestOperator qpxRestOperator;
+
+    @Autowired
     private ReservationDao reservationDao;
 
     @Autowired
-    public ReservationService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator, ReservationDao reservationDao) {
+    public ReservationService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator) {
         this.objectMapper = objectMapper;
         this.qpxRestOperator = qpxRestOperator;
-        this.reservationDao = reservationDao;
     }
 
     public boolean saveReservation(Reservation reservation){

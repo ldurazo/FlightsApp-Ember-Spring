@@ -38,16 +38,17 @@ public class ReservationDao implements Recordable {
         try {
             connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(Reservation.NAME_COLUMN, reservation.getName());
-            preparedStatement.setString(Reservation.LAST_NAME_COLUMN, reservation.getLast_name());
-            preparedStatement.setString(Reservation.COST_COLUMN, reservation.getCost());
-            preparedStatement.setString(Reservation.EMAIL_COLUMN, reservation.getEmail());
+            //Notice that the following magic numbers are to match the query order
+            //did not used the constant value in Reservation class because would not match the query
+            preparedStatement.setString(1, reservation.getName());
+            preparedStatement.setString(2, reservation.getLast_name());
+            preparedStatement.setString(3, reservation.getCost());
+            preparedStatement.setString(4, reservation.getEmail());
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println(e);
-            return false;
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (connection != null) {
@@ -61,14 +62,15 @@ public class ReservationDao implements Recordable {
 
     @Override
     public Object getRecord(int id) {
-        String query = "SELECT name, last_name, cost, email FROM RESERVATIONS WHERE ID=" + id;
-        return jdbcTemplate.queryForObject(query, Reservation.class, new ReservationRowMapper());
+        String query = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
+        return jdbcTemplate.queryForObject(query, new ReservationRowMapper());
     }
 
     public class ReservationRowMapper implements RowMapper {
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Reservation reservation = new Reservation();
+            reservation.setId(resultSet.getInt(Reservation.ID_COLUMN));
             reservation.setName(resultSet.getString(Reservation.NAME_COLUMN));
             reservation.setLast_name(resultSet.getString(Reservation.LAST_NAME_COLUMN));
             reservation.setCost(resultSet.getString(Reservation.COST_COLUMN));
