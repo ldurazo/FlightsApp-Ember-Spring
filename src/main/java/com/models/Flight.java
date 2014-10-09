@@ -1,15 +1,11 @@
 package com.models;
 
-
-import java.util.Date;
-
-
 public class Flight {
 
     private long id;
 
-    private Date departure_date;
-    private Date arrival_date;
+    private String departure_date;
+    private String arrival_date;
     private String departure_airport;
     private String arrival_airport;
     private int travel_minutes;
@@ -34,19 +30,19 @@ public class Flight {
         this.id = id;
     }
 
-    public Date getDeparture_date() {
+    public String getDeparture_date() {
         return departure_date;
     }
 
-    public void setDeparture_date(Date departure_date) {
+    public void setDeparture_date(String departure_date) {
         this.departure_date = departure_date;
     }
 
-    public Date getArrival_date() {
+    public String getArrival_date() {
         return arrival_date;
     }
 
-    public void setArrival_date(Date arrival_date) {
+    public void setArrival_date(String arrival_date) {
         this.arrival_date = arrival_date;
     }
 

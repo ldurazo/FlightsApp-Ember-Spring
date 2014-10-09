@@ -33,17 +33,17 @@ public class ReservationDao implements Recordable {
     public boolean save(Object record) {
         Connection connection = null;
         Reservation reservation = (Reservation) record;
-        String query = "INSERT INTO RESERVATIONS (name, last_name, cost, email)" +
-                "VALUES(?, ?, ?, ?)";
+        //Be aware that the order of columns must be respected
+        String query = "INSERT INTO RESERVATIONS (name, last_name, passengers, cost, email) VALUES(?, ?, ?, ?, ?)";
         try {
             connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            //Notice that the following magic numbers are to match the query order
-            //did not used the constant value in Reservation class because would not match the query
-            preparedStatement.setString(1, reservation.getName());
-            preparedStatement.setString(2, reservation.getLast_name());
-            preparedStatement.setString(3, reservation.getCost());
-            preparedStatement.setString(4, reservation.getEmail());
+            //Notice that the following values have a magic -1, because the id column is missing in the query
+            preparedStatement.setString(Reservation.NAME_COLUMN-1, reservation.getName());
+            preparedStatement.setString(Reservation.LAST_NAME_COLUMN-1, reservation.getLast_name());
+            preparedStatement.setInt(Reservation.PASSENGERS_COLUMN-1, reservation.getPassengers());
+            preparedStatement.setString(Reservation.COST_COLUMN-1, reservation.getCost());
+            preparedStatement.setString(Reservation.EMAIL_COLUMN-1, reservation.getEmail());
             preparedStatement.execute();
             return true;
         } catch (SQLException e) {
@@ -66,13 +66,14 @@ public class ReservationDao implements Recordable {
         return jdbcTemplate.queryForObject(query, new ReservationRowMapper());
     }
 
-    public class ReservationRowMapper implements RowMapper {
+    public class ReservationRowMapper implements RowMapper<Reservation> {
         @Override
-        public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+        public Reservation mapRow(ResultSet resultSet, int i) throws SQLException {
             Reservation reservation = new Reservation();
             reservation.setId(resultSet.getInt(Reservation.ID_COLUMN));
             reservation.setName(resultSet.getString(Reservation.NAME_COLUMN));
             reservation.setLast_name(resultSet.getString(Reservation.LAST_NAME_COLUMN));
+            reservation.setPassengers(resultSet.getInt(Reservation.PASSENGERS_COLUMN));
             reservation.setCost(resultSet.getString(Reservation.COST_COLUMN));
             reservation.setEmail(resultSet.getString(Reservation.EMAIL_COLUMN));
             return reservation;

@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS RESERVATIONS(
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
     last_name VARCHAR(255),
+    passengers SMALLINT,
     cost VARCHAR(255),
     email VARCHAR(255)
     );
