@@ -3,14 +3,14 @@ package com.dao;
 import com.models.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Component
 public class ReservationDao implements Recordable {
@@ -30,34 +30,28 @@ public class ReservationDao implements Recordable {
     }
 
     @Override
-    public boolean save(Object record) {
-        Connection connection = null;
-        Reservation reservation = (Reservation) record;
-        //Be aware that the order of columns must be respected
-        String query = "INSERT INTO RESERVATIONS (name, last_name, passengers, cost, email) VALUES(?, ?, ?, ?, ?)";
-        try {
-            connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            //Notice that the following values have a magic -1, because the id column is missing in the query
-            preparedStatement.setString(Reservation.NAME_COLUMN-1, reservation.getName());
-            preparedStatement.setString(Reservation.LAST_NAME_COLUMN-1, reservation.getLast_name());
-            preparedStatement.setInt(Reservation.PASSENGERS_COLUMN-1, reservation.getPassengers());
-            preparedStatement.setString(Reservation.COST_COLUMN-1, reservation.getCost());
-            preparedStatement.setString(Reservation.EMAIL_COLUMN-1, reservation.getEmail());
-            preparedStatement.execute();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
+    public boolean save(final Object record) {
+            KeyHolder holder = new GeneratedKeyHolder();
+            PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    Reservation reservation = (Reservation) record;
+                    //Be aware that the order of columns must be respected
+                    String query = "INSERT INTO RESERVATIONS (name, last_name, passengers, cost, email) VALUES(?, ?, ?, ?, ?)";
+                    PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
+                    //Notice that the following values have a magic -1, because the id column is missing in the query
+                    preparedStatement.setString(Reservation.NAME_COLUMN-1, reservation.getName());
+                    preparedStatement.setString(Reservation.LAST_NAME_COLUMN-1, reservation.getLast_name());
+                    preparedStatement.setInt(Reservation.PASSENGERS_COLUMN - 1, reservation.getPassengers());
+                    preparedStatement.setString(Reservation.COST_COLUMN-1, reservation.getCost());
+                    preparedStatement.setString(Reservation.EMAIL_COLUMN-1, reservation.getEmail());
+                    return preparedStatement;
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+            };
+            jdbcTemplate.update(preparedStatementCreator, holder);
+            //TODO insert this mofo to the flights db holder.getKey()
+            System.out.println(((Reservation) record).getFlights().size());
+            return true;
     }
 
     @Override
