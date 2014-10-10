@@ -25,7 +25,6 @@ testem.log
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
-*.idea/workspace.xml
 *.idea/tasks.xml
 *.idea/dictionaries
 
@@ -34,14 +33,14 @@ testem.log
 *.idea/dataSources.xml
 *.idea/sqlDataSources.xml
 *.idea/dynamic.xml
-*.idea/uiDesigner.xml
 
 # Gradle:
 *.idea/gradle.xml
-*.idea/libraries
 
 # Mongo Explorer plugin:
 # .idea/mongoSettings.xml
+
+target/* /target/ .metadata tar.gz .classpath .project */.settings/
 
 ## File-based project format:
 *.ipr
