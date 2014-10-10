@@ -41,6 +41,7 @@ testem.log
 # .idea/mongoSettings.xml
 
 target/* /target/ .metadata tar.gz .classpath .project */.settings/
+target/
 
 ## File-based project format:
 *.ipr
