@@ -62,4 +62,16 @@ public class Flight {
     public void setReservation_id(int reservation_id) {
         this.reservation_id = reservation_id;
     }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", departure_date='" + departure_date + '\'' +
+                ", arrival_date='" + arrival_date + '\'' +
+                ", departure_airport='" + departure_airport + '\'' +
+                ", arrival_airport='" + arrival_airport + '\'' +
+                ", reservation_id=" + reservation_id +
+                '}';
+    }
 }

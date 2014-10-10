@@ -84,8 +84,12 @@ public class ReservationDao implements Recordable {
 
     @Override
     public Object getRecord(int id) {
-        String query = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
-        return jdbcTemplate.queryForObject(query, new ReservationRowMapper());
+        String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
+        Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new ReservationRowMapper());
+        String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id=" + id;
+        List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new FlightsRowMapper());
+        reservation.setFlights(flightList);
+        return reservation;
     }
 
     public class ReservationRowMapper implements RowMapper<Reservation> {
@@ -99,6 +103,20 @@ public class ReservationDao implements Recordable {
             reservation.setCost(resultSet.getString(Reservation.COST_COLUMN));
             reservation.setEmail(resultSet.getString(Reservation.EMAIL_COLUMN));
             return reservation;
+        }
+    }
+
+    public class FlightsRowMapper implements RowMapper<Flight> {
+        @Override
+        public Flight mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+            Flight flight = new Flight();
+            flight.setId(resultSet.getInt(Flight.ID_COLUMN));
+            flight.setArrival_airport(resultSet.getString(Flight.ARRIVAL_AIRPORT_COLUMN));
+            flight.setDeparture_airport(resultSet.getString(Flight.DEPARTURE_AIRPORT_COLUMN));
+            flight.setArrival_date(resultSet.getString(Flight.ARRIVAL_DATE_COLUMN));
+            flight.setDeparture_date(resultSet.getString(Flight.DEPARTURE_DATE_COLUMN));
+            flight.setReservation_id(resultSet.getInt(Flight.RESERVATION_ID_COLUMN));
+            return flight;
         }
     }
 }

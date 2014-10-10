@@ -35,8 +35,10 @@ public class SearchController {
 
         //Logic to parse the parameters as json
         SearchRequestModel search = new SearchRequestModel(origin, destination, date, passengers, solutions);
+
         String jsonStringForRequest = searchService.getJsonStringForRequest(search);
         String jsonResponse = searchService.getFlightsAsJsonString(jsonStringForRequest);
+
         HttpHeaders responseHeaders = new HttpHeaders();
         Date currentTime = new Date(System.currentTimeMillis());
         responseHeaders.set("Date", currentTime.toString());

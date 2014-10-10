@@ -4,11 +4,13 @@ import com.models.Reservation;
 import com.services.ReservationService;
 import com.utils.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 
 @RestController
 public class ReservationController {
@@ -26,14 +28,17 @@ public class ReservationController {
         return new ResponseEntity<String>(String.valueOf(saveStatus), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET, headers = "Content-Type=application/json")
+    //TODO add email and name as path variables
+    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
     public ResponseEntity<String> retrieveReservation(@PathVariable int id){
-        String json = null;
+        HttpHeaders responseHeaders = new HttpHeaders();
+        Date currentTime = new Date(System.currentTimeMillis());
+        responseHeaders.set("Date", currentTime.toString());
         try {
-            json = reservationService.getReservationAsJson(id);
-            return new ResponseEntity<String>(json, HttpStatus.OK);
+            String json = reservationService.getReservationAsJson(id);
+            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
         } catch (IOException e) {
-            return new ResponseEntity<String>(Properties.ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>(Properties.ERROR, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
