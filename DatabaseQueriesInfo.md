@@ -43,7 +43,6 @@ queries for table creation:
 
 `CREATE TABLE IF NOT EXISTS FLIGHTS(
     id SERIAL PRIMARY KEY,
-    flight_number VARCHAR(255),
     departure_date VARCHAR(255),
     arrival_date VARCHAR(255),
     departure_airport VARCHAR(255),

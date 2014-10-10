@@ -1,32 +1,25 @@
 package com.models;
 
 public class Flight {
+    public static final int ID_COLUMN = 1;
+    public static final int DEPARTURE_DATE_COLUMN = 2;
+    public static final int ARRIVAL_DATE_COLUMN = 3;
+    public static final int DEPARTURE_AIRPORT_COLUMN = 4;
+    public static final int ARRIVAL_AIRPORT_COLUMN = 5;
+    public static final int RESERVATION_ID_COLUMN = 6;
 
-    private long id;
-
+    private int id;
     private String departure_date;
     private String arrival_date;
     private String departure_airport;
     private String arrival_airport;
-    private int travel_minutes;
+    private int reservation_id;
 
-    @Override
-    public String toString() {
-        return "Flight{" +
-                "id=" + id +
-                ", departure_date=" + departure_date +
-                ", arrival_date=" + arrival_date +
-                ", departure_airport='" + departure_airport + '\'' +
-                ", arrival_airport='" + arrival_airport + '\'' +
-                ", travel_minutes=" + travel_minutes +
-                '}';
-    }
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -62,12 +55,11 @@ public class Flight {
         this.arrival_airport = arrival_airport;
     }
 
-    public int getTravel_minutes() {
-        return travel_minutes;
+    public int getReservation_id() {
+        return reservation_id;
     }
 
-    public void setTravel_minutes(int travel_minutes) {
-        this.travel_minutes = travel_minutes;
+    public void setReservation_id(int reservation_id) {
+        this.reservation_id = reservation_id;
     }
-
 }

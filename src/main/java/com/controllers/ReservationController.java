@@ -26,7 +26,7 @@ public class ReservationController {
         return new ResponseEntity<String>(String.valueOf(saveStatus), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET, headers = "Content-Type=application/json")
     public ResponseEntity<String> retrieveReservation(@PathVariable int id){
         String json = null;
         try {
