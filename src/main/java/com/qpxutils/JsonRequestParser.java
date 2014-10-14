@@ -1,6 +1,6 @@
 package com.qpxutils;
 
-import com.models.SearchRequestModel;
+import com.models.SearchRequestQpx;
 import com.utils.GlobalObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,10 +15,10 @@ public class JsonRequestParser {
         this.objectMapper = objectMapper;
     }
 
-    public String createJsonStringSearchRequest(SearchRequestModel searchRequestModel) {
+    public String createJsonStringSearchRequest(SearchRequestQpx searchRequestQpx) {
         String jsonStringForRequest = null;
         try {
-            jsonStringForRequest = objectMapper.writeValueAsString(searchRequestModel);
+            jsonStringForRequest = objectMapper.writeValueAsString(searchRequestQpx);
         } catch (IOException e) {
             e.printStackTrace();
         }

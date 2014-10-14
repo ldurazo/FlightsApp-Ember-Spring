@@ -3,13 +3,13 @@ package com.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SearchRequestModel {
+public class SearchRequestQpx {
 
-    public SearchRequestModel(String origin, String destination, String date, String adultCount, String solutions) {
+    public SearchRequestQpx(SearchRequest searchRequest) {
         this.request = new HashMap<String, Object>();
-        this.slice[0] = new Slice(origin, destination, date);
-        this.passengers = new Passenger(adultCount);
-        this.solutions = solutions;
+        this.slice[0] = new Slice(searchRequest.getOrigin(), searchRequest.getDestination(), searchRequest.getDate());
+        this.passengers = new Passenger(searchRequest.getPassengers());
+        this.solutions = searchRequest.getSolutions();
 
         request.put("slice", this.slice);
         request.put("passengers", this.passengers);
@@ -76,22 +76,22 @@ public class SearchRequestModel {
     private Passenger passengers;
 
     public class Passenger {
-        private String adultCount;
+        private int passenger;
 
-        public String getAdultCount() {
-            return adultCount;
+        public int getAdultCount() {
+            return passenger;
         }
 
-        public void setAdultCount(String adultCount) {
-            this.adultCount = adultCount;
+        public void setAdultCount(int passengers) {
+            this.passenger = passengers;
         }
 
-        public Passenger(String adultCount) {
+        public Passenger(int passengers) {
 
-            this.adultCount = adultCount;
+            this.passenger = passengers;
         }
     }
     //endregion
 
-    private String solutions;
+    private int solutions;
 }

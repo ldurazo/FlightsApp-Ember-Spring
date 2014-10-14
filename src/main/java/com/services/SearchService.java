@@ -1,6 +1,6 @@
 package com.services;
 
-import com.models.SearchRequestModel;
+import com.models.SearchRequestQpx;
 import com.models.TripOption;
 import com.utils.GlobalObjectMapper;
 import com.qpxutils.QpxRestOperator;
@@ -28,8 +28,8 @@ public class SearchService {
         this.jsonRequestParser = jsonRequestParser;
     }
 
-    public String getJsonStringForRequest(SearchRequestModel searchRequestModel){
-        return jsonRequestParser.createJsonStringSearchRequest(searchRequestModel);
+    public String getJsonStringForRequest(SearchRequestQpx searchRequestQpx){
+        return jsonRequestParser.createJsonStringSearchRequest(searchRequestQpx);
     }
 
     public String getFlightsAsJsonString(String jsonStringForRequest){
