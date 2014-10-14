@@ -4,10 +4,10 @@ import com.dao.ReservationDao;
 import com.models.Reservation;
 import com.qpxutils.QpxRestOperator;
 import com.utils.GlobalObjectMapper;
-import org.codehaus.jackson.JsonGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReservationService {
     private GlobalObjectMapper objectMapper;
@@ -23,10 +23,15 @@ public class ReservationService {
         return reservationDao.save(reservation);
     }
 
-    public String getReservationAsJson(int id) throws IOException {
+    public String getReservationAsJson(int id) {
         Reservation reservation = (Reservation) reservationDao.getRecord(id);
-        String json = objectMapper.writeValueAsString(reservation);
-        return json;
+        Map<String, Object> responseWrapper = new HashMap<String, Object>();
+        if(reservation == null){
+            responseWrapper.put("reservation", "Reservation not found");
+            return objectMapper.objectToJson(responseWrapper);
+        }
+        responseWrapper.put("reservation", reservation);
+        return objectMapper.objectToJson(responseWrapper);
     }
 
 

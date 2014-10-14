@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SearchService {
@@ -36,7 +38,9 @@ public class SearchService {
             JsonNode node = objectMapper.readTree(qpxResponse);
             node = node.get("trips").get("tripOption");
             List<TripOption> list = objectMapper.readValue(node, objectMapper.getTypeFactory().constructCollectionType(List.class, TripOption.class));
-            return objectMapper.writeValueAsString(list);
+            Map<String, Object> responseWrapper = new HashMap<String, Object>();
+            responseWrapper.put("flights", list);
+            return objectMapper.writeValueAsString(responseWrapper);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package com.dao;
 import com.models.Flight;
 import com.models.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -48,53 +49,57 @@ public class ReservationDao implements Recordable {
                 //Be aware that the order of columns must be respected
                 String query = "INSERT INTO RESERVATIONS (name, last_name, passengers, cost, email) VALUES(?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
-                //Notice that the following values have a magic -1, because the id serial column is missing in the query
-                preparedStatement.setString(Reservation.NAME_COLUMN - 1, reservation.getName());
-                preparedStatement.setString(Reservation.LAST_NAME_COLUMN - 1, reservation.getLast_name());
-                preparedStatement.setInt(Reservation.PASSENGERS_COLUMN - 1, reservation.getPassengers());
-                preparedStatement.setString(Reservation.COST_COLUMN - 1, reservation.getCost());
-                preparedStatement.setString(Reservation.EMAIL_COLUMN - 1, reservation.getEmail());
+                //Notice that the following magic number are from this particular scope to fill the query placeholders
+                preparedStatement.setString(1, reservation.getName());
+                preparedStatement.setString(2, reservation.getLast_name());
+                preparedStatement.setInt(3, reservation.getPassengers());
+                preparedStatement.setString(4, reservation.getCost());
+                preparedStatement.setString(5, reservation.getEmail());
                 return preparedStatement;
             }
         };
         jdbcTemplate.update(preparedStatementCreator, holder);
     }
 
-    public void saveFlightsOfReservation(final Reservation reservation){
+    public void saveFlightsOfReservation(final Reservation reservation) {
         List<Flight> flightList = reservation.getFlights();
-        for(final Flight flight : flightList){
-        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                //Be aware that the order of columns must be respected
-                String query = "INSERT INTO FLIGHTS (departure_date, arrival_date, departure_airport, arrival_airport, reservation_id) VALUES(?, ?, ?, ?, ?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
-                //Notice that the following values have a magic -1, because the id serial column is missing in the query
-                preparedStatement.setString(Flight.DEPARTURE_DATE_COLUMN- 1, flight.getDeparture_date());
-                preparedStatement.setString(Flight.ARRIVAL_DATE_COLUMN - 1, flight.getArrival_date());
-                preparedStatement.setString(Flight.DEPARTURE_AIRPORT_COLUMN - 1, flight.getDeparture_airport());
-                preparedStatement.setString(Flight.ARRIVAL_AIRPORT_COLUMN - 1, flight.getArrival_airport());
-                preparedStatement.setInt(Flight.RESERVATION_ID_COLUMN - 1, holder.getKey().intValue());
-                return preparedStatement;
-            }
-        };
-        jdbcTemplate.update(preparedStatementCreator);
+        for (final Flight flight : flightList) {
+            PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                    //Be aware that the order of columns must be respected
+                    String query = "INSERT INTO FLIGHTS (departure_date, arrival_date, departure_airport, arrival_airport, reservation_id) VALUES(?, ?, ?, ?, ?)";
+                    PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
+                    //Notice that the following magic number are from this particular scope to fill the query placeholders
+                    preparedStatement.setString(1, flight.getDeparture_date());
+                    preparedStatement.setString(2, flight.getArrival_date());
+                    preparedStatement.setString(3, flight.getDeparture_airport());
+                    preparedStatement.setString(4, flight.getArrival_airport());
+                    preparedStatement.setInt(5, holder.getKey().intValue());
+                    return preparedStatement;
+                }
+            };
+            jdbcTemplate.update(preparedStatementCreator);
         }
     }
 
     @Override
     public Object getRecord(int id) {
-        String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
-        Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new ReservationRowMapper());
-        String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id=" + id;
-        List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new FlightsRowMapper());
-        reservation.setFlights(flightList);
-        return reservation;
+        try {
+            String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
+            Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new ReservationRowMapper());
+            String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id=" + id;
+            List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new FlightsRowMapper());
+            reservation.setFlights(flightList);
+            return reservation;
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     public class ReservationRowMapper implements RowMapper<Reservation> {
         @Override
-        public Reservation mapRow(ResultSet resultSet, int i) throws SQLException {
+        public Reservation mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
             Reservation reservation = new Reservation();
             reservation.setId(resultSet.getInt(Reservation.ID_COLUMN));
             reservation.setName(resultSet.getString(Reservation.NAME_COLUMN));

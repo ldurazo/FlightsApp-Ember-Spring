@@ -39,10 +39,7 @@ public class SearchController {
         String jsonStringForRequest = searchService.getJsonStringForRequest(search);
         String jsonResponse = searchService.getFlightsAsJsonString(jsonStringForRequest);
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        Date currentTime = new Date(System.currentTimeMillis());
-        responseHeaders.set("Date", currentTime.toString());
 
-        return new ResponseEntity<String>(jsonResponse, responseHeaders, HttpStatus.OK);
+        return new ResponseEntity<String>(jsonResponse, HttpStatus.OK);
     }
 }
