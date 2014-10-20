@@ -1,36 +1,49 @@
 App = Ember.Application.create();
 
 App.Router.map(function() {
-  this.resource('flights' , {path : '/flights'});
 });
 
 App.IndexRoute = Ember.Route.extend({
     model: function() {
-        //Uncomment this, this is the model that should be retrieved
-        //return this.store.find('Flight');
-
-        //Uncomment this to make calls to the API directly
-//        return $.getJSON("http://localhost:8080/mvn-webapp-flights/search?origin=LAX&destination=MEX&passengers=1&date=2014-12-19", function(data) {
-//            return data;
-//        });
-
-        //this code retrieves a dummy json instead of callin the API (remember that the response from this link requires a Access-Control-Allow-Origin: * header)
-        return $.getJSON("http://www.mocky.io/v2/542f03d5f190d8220c26e891", function(data) {
-                    return data;
-                });
+        Uncomment this, this is the model that should be retrieved
+        return this.store.find('Flight');
     }
 });
 
-App.IndexController = Ember.ArrayController.extend({});
+App.IndexController = Ember.ArrayController.extend({
+    needs: "application"
+});
 
-App.FlightsRoute = Ember.Route.extend({});
+App.IndexAdapter = DS.RESTAdapter.extend({
+  host: 'http://www.mocky.io/v2/542f03d5f190d8220c26e891'
+});
 
 App.ApplicationController = Ember.ObjectController.extend({
-  passengerslimit: [1,2,3,4,5,6]
+  passengerslimit: [1,2,3,4,5,6],
+  departureCity:null,
+  arrivalCity:null,
+  departureDate:null,
+  returnDate:null,
+  passengersNumber:null,
+  actions: {
+      searchFlights: function(){
+        var departureCity = this.get('departureCity');
+        var departureDate = this.get('departureDate');
+        var arrivalCity = this.get('arrivalCity');
+        var returnDate = this.get('returnDate');
+        var passengersNumber = this.get('passengersNumber');
+        console.log(departureDate +" "+ departureCity +" "+ arrivalCity +" "+ returnDate +" "+ passengersNumber);
+      }
+  }
 });
 
-App.ApplicationAdapter = DS.FixtureAdapter.extend({
-});
+App.PostRequest=DS.Model.extend({
+    departureCity: DS.attr('string'),
+    arrivalCity: DS.attr('string'),
+    returnDate: DS.attr('string'),
+    departureDate: DS.attr('string')
+    passengersNumber: DS.attr('string')
+})
 
 App.Flight = DS.Model.extend({
     saleTotal: DS.attr('string'),

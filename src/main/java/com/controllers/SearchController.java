@@ -8,12 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-/*
- * TODO very important: i have to refactor everything i put here, first make it work dude, then clean your mess up.
- */
-
-
 @RestController
 public class SearchController {
     private SearchService searchService;
@@ -25,7 +19,8 @@ public class SearchController {
 
     @RequestMapping(value="/search", produces="application/json", method = RequestMethod.POST, headers = "Content-Type=application/json")
     public @ResponseBody ResponseEntity<String> search(@RequestBody SearchRequest searchRequest) {
-
+        //TODO this should not be hardcoded, find a way to make it a feature
+        searchRequest.setSolutions(10);
         //Logic to parse the parameters as json
         SearchRequestQpx search = new SearchRequestQpx(searchRequest);
 

@@ -12,33 +12,44 @@
 <script type="text/x-handlebars">
     <h2>Flights webapp</h2>
     <hr/>
-    <nav class="col-md-3" id="main-form">
-        <form action="" id="search-form">
+    <div class="col-md-3" id="main-form">
+        <form {{action "searchFlights" on="submit"}} class="input-edit">
+
             <label>One Way</label>
             <input type="radio" name="flight-type" id="one-way" />
+
             <label>Round</label>
             <input type="radio" name="flight-type" id="round-trip" />
+
             <label>Passengers:</label>
-            {{view Ember.Select content=passengerslimit}}
+            {{view Ember.Select content=passengerslimit valueBinding = "passengersNumber"}}
             <hr />
+
             <label>From:</label>
-            <input type="text" class="form-control" placeholder="Departure city"/>
+            {{input type="text" class="form-control" placeholder="Departure city" valueBinding = "departureCity"}}
+
             <label>To:</label>
-            <input type="text" class="form-control" placeholder="Arrival city" />
+            {{input type="text" class="form-control" placeholder="Arrival city" valueBinding = "arrivalCity"}}
 
             <div class="row">
                 <div class="col-md-6">
+
                     <label>Departure:</label>
-                    <input type="date" class="form-control" id="departure-date"/>
+                    {{input type="date" class="form-control" id="departure-date" valueBinding = "departureDate"}}
+
                 </div>
                 <div class="col-md-6">
+
                     <label>Return:</label>
-                    <input type="date" class="form-control" id="returning-date"/>
+                    {{input type="date" class="form-control" id="returning-date" valueBinding = "returnDate"}}
+
                 </div>
             </div>
-            <input type="submit" value="Search" class="btn" id="search-btn"/>
+
+            {{input type="submit" value="Search" class="btn" id="search-btn"}}
+
         </form>
-    </nav>
+    </div>
     <div id="container" class="col-md-8">
         {{outlet}}
     </div>
@@ -65,6 +76,8 @@
                 <label id="price">{{saleTotal}}</label>
             </div>
         </li>
+        {{else}}
+        <span class="label label-info" id="results-flights">Search flights</span>
         {{/each}}
     </ul>
 </script>
