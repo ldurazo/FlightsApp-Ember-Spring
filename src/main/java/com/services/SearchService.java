@@ -38,9 +38,7 @@ public class SearchService {
             JsonNode node = objectMapper.readTree(qpxResponse);
             node = node.get("trips").get("tripOption");
             List<TripOption> list = objectMapper.readValue(node, objectMapper.getTypeFactory().constructCollectionType(List.class, TripOption.class));
-            Map<String, Object> responseWrapper = new HashMap<String, Object>();
-            responseWrapper.put("flights", list);
-            return objectMapper.writeValueAsString(responseWrapper);
+            return objectMapper.writeValueAsString(list);
         } catch (IOException e) {
             e.printStackTrace();
         }

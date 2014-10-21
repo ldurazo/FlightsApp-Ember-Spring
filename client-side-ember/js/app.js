@@ -1,3 +1,5 @@
+
+
 App = Ember.Application.create({
     LOG_ACTIVE_GENERATION: true,
     LOG_TRANSITIONS: true,
@@ -21,18 +23,30 @@ App.FlightsRoute = Ember.Route.extend({
 //                                          });
 
         //This is without the flights key on json to consume
-      return $.getJSON("http://www.mocky.io/v2/542f03d5f190d8220c26e891", function(data) {
-                                            return data;
-                                        });
+//      return $.getJSON("http://www.mocky.io/v2/542f03d5f190d8220c26e891", function(data) {
+//                                            return data;
+//                                        });
+
+        //this is a post, ajaxSetup overrides default configuration for Ajax Requests and allows application/json
+        $.ajaxSetup({
+          contentType: "application/json; charset=utf-8"
+        });
+        return $.post("http://localhost:8080/mvn-webapp-flights/search", searchJson, function(response) {
+            return response;
+        }, 'json');
 
     }
 });
 
 App.FlightsController = Ember.ArrayController.extend({});
 
-App.ApplicationAdapter = DS.RESTAdapter.extend({
-    host:"http://www.mocky.io/v2/5445a3371db7968c1c5f24be"
-});
+    //i dont know what to do to this Adapter yet...
+//App.ApplicationAdapter = DS.RESTAdapter.extend({
+//    host:"http://www.mocky.io/v2/5445a3371db7968c1c5f24be"
+//});
+
+//A wild dirty global variable appears, but dont run from it.
+searchJson = null;
 
 App.ApplicationController = Ember.ObjectController.extend({
       passengerslimit: [1,2,3,4,5,6],
@@ -48,12 +62,11 @@ App.ApplicationController = Ember.ObjectController.extend({
             var arrivalCity = this.get('arrivalCity');
             var returnDate = this.get('returnDate');
             var passengersNumber = this.get('passengersNumber');
-            var searchJson = JSON.stringify({
-            departureCity: departureCity,
-                            arrivalCity: arrivalCity,
-                            departureDate: departureDate,
-                            returnDate: returnDate,
-                            passengersNumber: passengersNumber
+            searchJson = JSON.stringify({
+                origin: departureCity,
+                destination: arrivalCity,
+                date: departureDate,
+                passengers: passengersNumber
             });
             console.log(searchJson);
             this.transitionToRoute('flights');
