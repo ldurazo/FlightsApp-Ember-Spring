@@ -47,8 +47,16 @@
                 </div>
             </div>
 
-            {{input type="submit" value="Search" class="btn" id="search-btn"}}
+            {{input type="submit" value="Search flights" class="btn" id="search-btn"}}
 
+        </form>
+
+        <form {{action "searchReservation" on="submit"}} class="input-edit">
+            <label>Reservation id:</label>
+            {{input type="text" class="form-control" placeholder="Reservation number" valueBinding = "reservationNumber"}}
+            <label>E-Mail</label>
+            {{input type="text" class="form-control" placeholder="Arrival city" valueBinding = "reservationEmail"}}
+            {{input type="submit" value="Search reservation" class="btn" id="reservation-btn"}}
         </form>
     </div>
 
@@ -84,8 +92,11 @@
     </ul>
 </script>
 
-<script type="text/x-handlebars" data-template-name="reservations">
-Hello lol
+<script type="text/x-handlebars" data-template-name="reservation">
+<span class="label label-info" id="reservation-id">{{id}}</span>
+<span class="label label-info" id="reservation-name">{{name}}</span>
+<span class="label label-info" id="reservation-last_name">{{last_name}}</span>
+<span class="label label-info" id="reservation-passengers">{{passengers}}</span>
 </script>
 
 <script src="js/libs/jquery-1.10.2.js"></script>

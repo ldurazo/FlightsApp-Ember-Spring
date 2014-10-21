@@ -8,26 +8,22 @@ App = Ember.Application.create({
 });
 
 App.Router.map(function() {
-    this.route("reservations");
+    this.resource("reservation", { path: '/reservation'});
     this.resource('flights', { path: '/flights'});
+});
+
+App.ReservationRoute = Ember.Route.extend({
+        model: function() {
+            return $.getJSON("http://localhost:8080/mvn-webapp-flights/reservation/"+reservationId, function(data) {
+                console.log("anything")
+                console.log(data);
+                return data;
+            });
+        }
 });
 
 App.FlightsRoute = Ember.Route.extend({
     model: function() {
-//        Uncomment this, this is the model that should be retrieved
-//        return this.store.find("flight");
-
-        //this contains flights key on json to consume
-//        return $.getJSON("http://www.mocky.io/v2/5445a3371db7968c1c5f24be", function(data) {
-//                                              return data;
-//                                          });
-
-        //This is without the flights key on json to consume
-//      return $.getJSON("http://www.mocky.io/v2/542f03d5f190d8220c26e891", function(data) {
-//                                            return data;
-//                                        });
-
-        //this is a post, ajaxSetup overrides default configuration for Ajax Requests and allows application/json
         $.ajaxSetup({
           contentType: "application/json; charset=utf-8"
         });
@@ -40,13 +36,13 @@ App.FlightsRoute = Ember.Route.extend({
 
 App.FlightsController = Ember.ArrayController.extend({});
 
-    //i dont know what to do to this Adapter yet...
-//App.ApplicationAdapter = DS.RESTAdapter.extend({
-//    host:"http://www.mocky.io/v2/5445a3371db7968c1c5f24be"
-//});
+App.ReservationController = Ember.ObjectController.extend({
 
-//A wild dirty global variable appears, but dont run from it.
+});
+
+//Global variables.
 searchJson = null;
+reservationId = null;
 
 App.ApplicationController = Ember.ObjectController.extend({
       passengerslimit: [1,2,3,4,5,6],
@@ -55,8 +51,11 @@ App.ApplicationController = Ember.ObjectController.extend({
       departureDate:null,
       returnDate:null,
       passengersNumber:null,
+      reservationNumber:null,
+      reservationEmail:null,
       actions: {
           searchFlights: function(){
+            this.transitionToRoute('application');
             var departureCity = this.get('departureCity');
             var departureDate = this.get('departureDate');
             var arrivalCity = this.get('arrivalCity');
@@ -70,10 +69,33 @@ App.ApplicationController = Ember.ObjectController.extend({
             });
             console.log(searchJson);
             this.transitionToRoute('flights');
+          },
+          searchReservation: function(){
+            this.transitionToRoute('application');
+            reservationId = this.get('reservationNumber');
+            var reservationEmail = this.get('reservationEmail');
+            this.transitionToRoute('reservation');
           }
       }
 });
 
+//Models for reservation
+App.Reservation = DS.Model.extend({
+    id: DS.attr('string'),
+    name:DS.attr('string'),
+    last_name:DS.attr('string'),
+    passengers:DS.attr('string'),
+    flights:DS.hasMany('stop')
+});
+
+App.Stop = DS.Model.extend({
+    departure_date:DS.attr('date'),
+    arrival_date:DS.attr('date'),
+    departure_airport:DS.attr('string'),
+    arrival_airport:DS.attr('string')
+});
+
+// Models for search
 App.Flight = DS.Model.extend({
     saleTotal: DS.attr('string'),
     slices: DS.hasMany('slice')
