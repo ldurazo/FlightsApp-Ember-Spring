@@ -2,16 +2,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Ember Starter Kit</title>
+    <title>Flights App</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+<h2>Flights webapp</h2>
+<hr/>
 <script type="text/x-handlebars">
-    <h2>Flights webapp</h2>
-    <hr/>
+
     <div class="col-md-3" id="main-form">
         <form {{action "searchFlights" on="submit"}} class="input-edit">
 
@@ -50,13 +51,14 @@
 
         </form>
     </div>
+
     <div id="container" class="col-md-8">
-        {{outlet}}
-    </div>
+    {{outlet}}
+    <div/>
 </script>
 
-<script type="text/x-handlebars" id="index">
-    <ul id="flight-list" class="list-group">
+<script type="text/x-handlebars" data-template-name="flights">
+        <ul id="flight-list" class="list-group">
         {{#each}}
         <li class="list-group-item">
             <div class="col-md-10">
@@ -80,6 +82,10 @@
         <span class="label label-info" id="results-flights">Search flights</span>
         {{/each}}
     </ul>
+</script>
+
+<script type="text/x-handlebars" data-template-name="reservations">
+Hello lol
 </script>
 
 <script src="js/libs/jquery-1.10.2.js"></script>
