@@ -15,8 +15,6 @@ App.Router.map(function() {
 App.ReservationRoute = Ember.Route.extend({
         model: function() {
             return $.getJSON("http://localhost:8080/mvn-webapp-flights/reservation/"+reservationId, function(data) {
-                console.log("anything")
-                console.log(data);
                 return data;
             });
         }
@@ -67,7 +65,6 @@ App.ApplicationController = Ember.ObjectController.extend({
                 date: departureDate,
                 passengers: passengersNumber
             });
-            console.log(searchJson);
             this.transitionToRoute('flights');
           },
           searchReservation: function(){

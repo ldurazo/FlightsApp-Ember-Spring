@@ -55,7 +55,7 @@
             <label>Reservation id:</label>
             {{input type="text" class="form-control" placeholder="Reservation number" valueBinding = "reservationNumber"}}
             <label>E-Mail</label>
-            {{input type="text" class="form-control" placeholder="Arrival city" valueBinding = "reservationEmail"}}
+            {{input type="text" class="form-control" placeholder="E-Mail" valueBinding = "reservationEmail"}}
             {{input type="submit" value="Search reservation" class="btn" id="reservation-btn"}}
         </form>
     </div>
@@ -93,10 +93,21 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="reservation">
-<span class="label label-info" id="reservation-id">{{id}}</span>
-<span class="label label-info" id="reservation-name">{{name}}</span>
-<span class="label label-info" id="reservation-last_name">{{last_name}}</span>
-<span class="label label-info" id="reservation-passengers">{{passengers}}</span>
+<label>Reservation id: {{id}}</label>
+<label>Name: {{name}}</label>
+<label>Last name: {{last_name}}</label>
+<label>Number of passengers: {{passengers}}</label>
+        <li class="list-group-item">
+                {{#each flights}}
+                    <label>{{departure_date}}</label>
+                    <label>{{departure_airport}} - </label>
+                    <label>{{arrival_date}}</label>
+                    <label>{{arrival_airport}}</label>
+                    <hr/>
+                {{else}}
+                    <label>No flights found</label>
+                {{/each}}
+        </li>
 </script>
 
 <script src="js/libs/jquery-1.10.2.js"></script>

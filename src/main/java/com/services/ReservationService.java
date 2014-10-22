@@ -28,13 +28,12 @@ public class ReservationService {
 
     public String getReservationAsJson(int id) {
         Reservation reservation = (Reservation) reservationDao.getRecord(id);
-        Map<String, Object> responseWrapper = new HashMap<String, Object>();
         if(reservation == null){
-            responseWrapper.put("reservation", "Reservation not found");
+            Map<String, Object> responseWrapper = new HashMap<String, Object>();
+            responseWrapper.put("error", "Reservation not found");
             return objectMapper.objectToJson(responseWrapper);
         }
-        responseWrapper.put("reservation", reservation);
-        return objectMapper.objectToJson(responseWrapper);
+        return objectMapper.objectToJson(reservation);
     }
 
 

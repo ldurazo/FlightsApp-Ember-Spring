@@ -24,12 +24,11 @@ public class AutocompleteService {
 
     public String getAirportSuggestions(String userInput){
         List<Airport> airportList = airportDao.getAirportName(userInput);
-        Map<String, Object> responseMap = new HashMap<String, Object>();
         if(airportList.isEmpty()){
-            responseMap.put("Airports", "No suggestions found");
+            Map<String, Object> responseMap = new HashMap<String, Object>();
+            responseMap.put("Error", "No suggestions found");
             return objectMapper.objectToJson(responseMap);
         }
-        responseMap.put("Airports", airportList);
-        return objectMapper.objectToJson(responseMap);
+        return objectMapper.objectToJson(airportList);
     }
 }
