@@ -42,7 +42,7 @@ public class AirportDao {
                 return connection.prepareStatement(airportsQuery);
             }
         };
-        return jdbcTemplate.query(airportsQuery, new AirportMapper());
+        return jdbcTemplate.query(preparedStatementCreator, new AirportMapper());
     }
 
     public class AirportMapper implements RowMapper<Airport> {
