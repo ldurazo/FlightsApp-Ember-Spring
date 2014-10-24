@@ -16,11 +16,8 @@
     <div class="col-md-3" id="main-form">
         <form {{action "searchFlights" on="submit"}} class="input-edit">
 
-            <label>One Way</label>
-            <input type="radio" name="flight-type" id="one-way" />
-
-            <label>Round</label>
-            <input type="radio" name="flight-type" id="round-trip" />
+            <label>One way trip?</label>
+            {{view App.TripCheck action='tripType' checked=isRoundTrip}}
 
             <label>Passengers:</label>
             {{view Ember.Select content=passengerslimit valueBinding = "passengersNumber"}}
@@ -42,7 +39,7 @@
                 <div class="col-md-6">
 
                     <label>Return:</label>
-                    {{input type="date" class="form-control" id="returning-date" valueBinding = "returnDate"}}
+                    {{input type="date" class="form-control" id="returning-date" valueBinding = "returnDate" disabled=isRoundTrip}}
 
                 </div>
             </div>
@@ -67,29 +64,73 @@
 
 <script type="text/x-handlebars" data-template-name="flights">
         <ul id="flight-list" class="list-group">
+        <label>Select your flight by clicking the radio button</label>
         {{#each}}
         <li class="list-group-item">
-            <div class="col-md-10">
+            <div class="col-md-6">
                 {{#each slice}}
                 {{#each segment}}
                 {{#each leg}}
-                    <span class="label label-info" id="results-flights">{{origin}}</span>
-                    <label id="flight-timestamps">{{departureTime}}</label>
-                    <span class="label label-info" id="results-flights">{{destination}}</span>
-                    <label id="flight-timestamps">{{arrivalTime}}</label>
+                    <div>
+                        <span class="label label-info" id="results-flights">{{origin}}</span>
+                        <label id="flight-timestamps">{{departureTime}}</label>
+                        <span class="label label-info" id="results-flights">{{destination}}</span>
+                        <label id="flight-timestamps">{{arrivalTime}}</label>
+                    </div>
                 <hr/>
                 {{/each}}
                 {{/each}}
                 {{/each}}
             </div>
-            <div class="col-md-2 vertical">
+            <div class="col-md-6 vertical">
                 <label id="price">{{saleTotal}}</label>
+                <label>{{passengersNumber}}</label>
+                {{#link-to 'booking' this classNames="btn btn-primary btn-small"}}Book this flight{{/link-to}}
             </div>
         </li>
         {{else}}
-        <span class="label label-info" id="results-flights">Search flights</span>
+        <span class="label label-info" id="results-flights">There was an error, please check your input or maybe it was the server, idk</span>
         {{/each}}
     </ul>
+</script>
+
+<script type="text/x-handlebars" data-template-name="booking">
+    <div class="col-md-6">
+        <h3>Reservation info.</h3>
+        <label>name:</label>
+        {{input type="text" class="form-control" placeholder="Name" valueBinding = "userName"}}
+        <label>last name:</label>
+        {{input type="text" class="form-control" placeholder="Last Name" valueBinding = "userLastName"}}
+        <label>email:</label>
+        {{input type="text" class="form-control" placeholder="E-Mail" valueBinding = "userMail"}}
+        <label>Price:</label>
+        <br/>
+        <label>{{saleTotal}}</label>
+        <br/>
+        <label>Passengers:</label>
+        <br/>
+        <label>{{controllers.application.passengersNumber}}</label>
+        <h4>List of Flights</h4>
+                {{#each slice}}
+                {{#each segment}}
+                {{#each leg}}
+                    <li class="list-group-item">
+                        <label>Departure Airport:</label>
+                        <label class="label label-default"> {{origin}}</label>
+                        <hr/>
+                        <label>Departure Time:</label>
+                        <label class="label label-default">{{departureTime}}</label>
+                        <hr/>
+                        <label>Arrival Airport:</label>
+                        <label class="label label-default">{{destination}}</label>
+                        <hr/>
+                        <label>Arrival Time:</label>
+                        <label class="label label-default"> {{arrivalTime}}</label>
+                    </li>
+                {{/each}}
+                {{/each}}
+                {{/each}}
+    </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="reservation">

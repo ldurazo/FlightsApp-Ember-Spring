@@ -1,5 +1,3 @@
-
-
 App = Ember.Application.create({
     LOG_ACTIVE_GENERATION: true,
     LOG_TRANSITIONS: true,
@@ -9,7 +7,8 @@ App = Ember.Application.create({
 
 App.Router.map(function() {
     this.resource("reservation", { path: '/reservation'});
-    this.resource('flights', { path: '/flights'});
+    this.resource("flights", { path: '/flights'});
+    this.resource("booking", { path: '/booking/:model'});
 });
 
 App.ReservationRoute = Ember.Route.extend({
@@ -22,25 +21,36 @@ App.ReservationRoute = Ember.Route.extend({
 
 App.FlightsRoute = Ember.Route.extend({
     model: function() {
-        $.ajaxSetup({
-          contentType: "application/json; charset=utf-8"
-        });
-        return $.post("http://localhost:8080/mvn-webapp-flights/search", searchJson, function(response) {
-            return response;
-        }, 'json');
+        //Uncomment this when consuming the API
+//        $.ajaxSetup({
+//          contentType: "application/json; charset=utf-8"
+//        });
+//        return $.post("http://localhost:8080/mvn-webapp-flights/search", searchJson, function(response) {
+//            console.log(response);
+//            return response;
+//        }, 'json');
 
+        //dummy json (QPX has limit of requests per day)
+        return $.getJSON("http://www.mocky.io/v2/542f03d5f190d8220c26e891", function(data){
+            return data;
+        });
     }
+});
+
+App.BookingController = Ember.ObjectController.extend({
+    needs:['application']
 });
 
 App.FlightsController = Ember.ArrayController.extend({});
 
-App.ReservationController = Ember.ObjectController.extend({
-
-});
+App.ReservationController = Ember.ObjectController.extend({});
 
 //Global variables.
 searchJson = null;
 reservationId = null;
+passengersNumber = null;
+
+App.TripCheck = Ember.Checkbox.extend({});
 
 App.ApplicationController = Ember.ObjectController.extend({
       passengerslimit: [1,2,3,4,5,6],
@@ -51,13 +61,20 @@ App.ApplicationController = Ember.ObjectController.extend({
       passengersNumber:null,
       reservationNumber:null,
       reservationEmail:null,
+      isRoundTrip : false,
       actions: {
+          tripType: function(){
+            isRoundTrip = this.get('isRoundTrip');
+            console.log(isRoundTrip);
+          },
           searchFlights: function(){
+          passengersNumber = this.get('passengersNumber');
             this.transitionToRoute('application');
-            var departureCity = this.get('departureCity');
-            var departureDate = this.get('departureDate');
-            var arrivalCity = this.get('arrivalCity');
-            var returnDate = this.get('returnDate');
+            //TODO hardcoded stuff, take them out.
+            var departureCity = "LAX";//this.get('departureCity');
+            var departureDate = "2014-12-12";//this.get('departureDate');
+            var arrivalCity = "MEX";//this.get('arrivalCity');
+            var returnDate = "2014-19-12";//this.get('returnDate');
             var passengersNumber = this.get('passengersNumber');
             searchJson = JSON.stringify({
                 origin: departureCity,
@@ -65,6 +82,7 @@ App.ApplicationController = Ember.ObjectController.extend({
                 date: departureDate,
                 passengers: passengersNumber
             });
+            console.log(searchJson);
             this.transitionToRoute('flights');
           },
           searchReservation: function(){
