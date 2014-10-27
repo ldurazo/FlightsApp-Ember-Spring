@@ -9,9 +9,18 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-<h2>Flights webapp</h2>
-<hr/>
 <script type="text/x-handlebars">
+<h1>Flights webapp</h1>
+    <nav class="navbar navbar-default" role="navigation">
+     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        {{#link-to 'search' classNames="btn btn-primary btn-small"}}Search for flights{{/link-to}}
+        {{#link-to 'reserve' classNames="btn btn-primary btn-small"}}Search for reservation{{/link-to}}
+     </nav>
+     {{outlet}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="search">
 
     <div class="col-md-3" id="main-form">
         <form {{action "searchFlights" on="submit"}} class="input-edit">
@@ -46,14 +55,6 @@
 
             {{input type="submit" value="Search flights" class="btn" id="search-btn"}}
 
-        </form>
-
-        <form {{action "searchReservation" on="submit"}} class="input-edit">
-            <label>Reservation id:</label>
-            {{input type="text" class="form-control" placeholder="Reservation number" valueBinding = "reservationNumber"}}
-            <label>E-Mail</label>
-            {{input type="text" class="form-control" placeholder="E-Mail" valueBinding = "reservationEmail"}}
-            {{input type="submit" value="Search reservation" class="btn" id="reservation-btn"}}
         </form>
     </div>
 
@@ -109,7 +110,7 @@
         <br/>
         <label>Passengers:</label>
         <br/>
-        <label>{{controllers.application.passengersNumber}}</label>
+        <label>{{controllers.search.passengersNumber}}</label>
         <h4>List of Flights</h4>
                 {{#each slice}}
                 {{#each segment}}
@@ -133,20 +134,43 @@
     </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="reserve">
+    <div class="col-md-3" id="main-form">
+        <form {{action "searchReservation" on="submit"}} class="input-edit">
+            <label>Reservation id:</label>
+            {{input type="text" class="form-control" placeholder="Reservation number" valueBinding = "reservationNumber"}}
+            <label>E-Mail</label>
+            {{input type="text" class="form-control" placeholder="E-Mail" valueBinding = "reservationEmail"}}
+            {{input type="submit" value="Search reservation" class="btn" id="reservation-btn"}}
+        </form>
+    </div>
+
+    <div id="container" class="col-md-8">
+    {{outlet}}
+    <div/>
+</script>
+
 <script type="text/x-handlebars" data-template-name="reservation">
-<label>Reservation id: {{id}}</label>
-<label>Name: {{name}}</label>
-<label>Last name: {{last_name}}</label>
-<label>Number of passengers: {{passengers}}</label>
+<label>Reservation id:</label>
+<label>{{id}}</label>
+<br/>
+<label>Name:</label>
+<label>{{name}}</label>
+<br/>
+<label>Last name:</label>
+<label>{{last_name}}</label>
+<br/>
+<label>Number of passengers:</label>
+<label>{{passengers}}</label>
         <li class="list-group-item">
                 {{#each flights}}
                     <label>{{departure_date}}</label>
-                    <label>{{departure_airport}} - </label>
+                    <label class="label label-default">{{departure_airport}}</label> -
                     <label>{{arrival_date}}</label>
-                    <label>{{arrival_airport}}</label>
+                    <label class="label label-default">{{arrival_airport}}</label>
                     <hr/>
                 {{else}}
-                    <label>No flights found</label>
+                    <label>No reservation found</label>
                 {{/each}}
         </li>
 </script>
@@ -156,6 +180,9 @@
 <script src="js/libs/ember-1.7.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.10/ember-data.min.js"></script>
 <script src="js/app.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/models.js"></script>
+<script src="js/router.js"></script>
 <!-- to activate the test runner, add the "?test" query string parameter -->
 <script src="tests/runner.js"></script>
 </body>
