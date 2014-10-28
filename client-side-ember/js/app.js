@@ -5,8 +5,6 @@ App = Ember.Application.create({
     LOG_VIEW_LOOKUPS: true
 });
 
-$.ajaxSetup({cache: false});
-
 //Global variables.
 searchJson = null;
 reservationId = null;
