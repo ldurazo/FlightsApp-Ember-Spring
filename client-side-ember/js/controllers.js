@@ -1,8 +1,35 @@
-App.TripCheck = Ember.Checkbox.extend({});
+
 
 App.BookingController = Ember.ObjectController.extend({
-    needs:['search']
+    needs:['search'],
+    name:null,
+    last_name:null,
+    email:null,
+    listOfFlights:null,
+    actions: {
+        saveReservation: function(){
+            this.transitionToRoute('booking')
+            name= this.get('userName');
+            last_name= this.get('userLastName');
+            email=this.get('userMail');
+            price = this.get('saleTotal');
+            passengersNumber = this.get('controllers.search.passengersNumber');
+            listOfFlights = this.get('slice')[0].segment[0].leg;
+            bookJson = JSON.stringify({
+                name: name,
+                last_name: last_name,
+                passengers: passengersNumber,
+                flights: listOfFlights,
+                cost: price,
+                email: email
+            });
+            console.log(bookJson);
+            this.transitionToRoute('booked');
+        }
+    }
 });
+
+App.BookedControler=Ember.ObjectController.extend({});
 
 App.FlightsController = Ember.ArrayController.extend({});
 

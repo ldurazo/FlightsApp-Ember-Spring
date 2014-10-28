@@ -9,10 +9,10 @@ public class Flight {
     public static final int RESERVATION_ID_COLUMN = 6;
 
     private int id;
-    private String departure_date;
-    private String arrival_date;
-    private String departure_airport;
-    private String arrival_airport;
+    private String departureTime;
+    private String arrivalTime;
+    private String origin;
+    private String destination;
     private int reservation_id;
 
     public int getId() {
@@ -23,36 +23,36 @@ public class Flight {
         this.id = id;
     }
 
-    public String getDeparture_date() {
-        return departure_date;
+    public String getDepartureTime() {
+        return departureTime;
     }
 
-    public void setDeparture_date(String departure_date) {
-        this.departure_date = departure_date;
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
     }
 
-    public String getArrival_date() {
-        return arrival_date;
+    public String getArrivalTime() {
+        return arrivalTime;
     }
 
-    public void setArrival_date(String arrival_date) {
-        this.arrival_date = arrival_date;
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
-    public String getDeparture_airport() {
-        return departure_airport;
+    public String getOrigin() {
+        return origin;
     }
 
-    public void setDeparture_airport(String departure_airport) {
-        this.departure_airport = departure_airport;
+    public void setOrigin(String origin) {
+        this.origin = origin;
     }
 
-    public String getArrival_airport() {
-        return arrival_airport;
+    public String getDestination() {
+        return destination;
     }
 
-    public void setArrival_airport(String arrival_airport) {
-        this.arrival_airport = arrival_airport;
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public int getReservation_id() {
@@ -67,10 +67,10 @@ public class Flight {
     public String toString() {
         return "Flight{" +
                 "id=" + id +
-                ", departure_date='" + departure_date + '\'' +
-                ", arrival_date='" + arrival_date + '\'' +
-                ", departure_airport='" + departure_airport + '\'' +
-                ", arrival_airport='" + arrival_airport + '\'' +
+                ", departureTime='" + departureTime + '\'' +
+                ", arrivalTime='" + arrivalTime + '\'' +
+                ", origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
                 ", reservation_id=" + reservation_id +
                 '}';
     }

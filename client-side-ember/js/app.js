@@ -5,7 +5,14 @@ App = Ember.Application.create({
     LOG_VIEW_LOOKUPS: true
 });
 
-//Global variables.
+App.TripCheck = Ember.Checkbox.extend({});
+
+        $.ajaxSetup({
+          contentType: "application/json; charset=utf-8"
+        });
+
+//Global variables, they may belong to somewhere else.
 searchJson = null;
+bookJson = null;
 reservationId = null;
 passengersNumber = null;

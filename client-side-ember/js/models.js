@@ -34,3 +34,7 @@ App.Leg = DS.Model.extend({
     origin: DS.attr('string'),
     destination: DS.attr('string')
 });
+
+App.Status = DS.Model.extend({
+    status: DS.belongsTo
+});

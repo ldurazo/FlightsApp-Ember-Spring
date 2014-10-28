@@ -9,9 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestController
 public class ReservationController {
     public static final String RESERVATION_ENDPOINT = "/reservation";
@@ -27,14 +24,11 @@ public class ReservationController {
     @RequestMapping(value = "/reservation", method = RequestMethod.POST, headers = "Content-Type=application/json")
     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
         boolean statusSaved = reservationService.saveReservation(reservation);
-        Map<String, Object> responseMap = new HashMap<String, Object>();
         String response;
         if (statusSaved) {
-            responseMap.put("status", new CustomResponse("Reservation saved successfully"));
-            response = objectMapper.objectToJson(responseMap);
+            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully"));
         } else {
-            responseMap.put("status", new CustomResponse("Reservation not saved"));
-            response = objectMapper.objectToJson(responseMap);
+            response = objectMapper.objectToJson(new CustomResponse("Something happened, your reservation was not saved"));
         }
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }

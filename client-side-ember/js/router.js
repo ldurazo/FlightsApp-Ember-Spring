@@ -3,6 +3,8 @@ App.Router.map(function() {
         this.resource("flights", { path: '/flights'});
     });
 
+    this.route("booked");
+
     this.route("booking", { path: '/booking/:model'});
 
     this.route("reserve", function() {
@@ -22,12 +24,18 @@ App.ReservationRoute = Ember.Route.extend({
     }
 });
 
+App.BookedRoute = Ember.Route.extend({
+        model: function() {
+            return $.post("http://localhost:8080/mvn-webapp-flights/reservation", bookJson, function(response) {
+                console.log(response);
+                return response;
+            }, 'json');
+        }
+});
+
 App.FlightsRoute = Ember.Route.extend({
     model: function() {
         //TODO Uncomment this when consuming the API
-//        $.ajaxSetup({
-//          contentType: "application/json; charset=utf-8"
-//        });
 //        return $.post("http://localhost:8080/mvn-webapp-flights/search", searchJson, function(response) {
 //            console.log(response);
 //            return response;

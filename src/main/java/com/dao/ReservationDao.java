@@ -71,10 +71,10 @@ public class ReservationDao implements Recordable {
                     String query = "INSERT INTO FLIGHTS (departure_date, arrival_date, departure_airport, arrival_airport, reservation_id) VALUES(?, ?, ?, ?, ?)";
                     PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
                     //Notice that the following magic number are from this particular scope to fill the query placeholders
-                    preparedStatement.setString(1, flight.getDeparture_date());
-                    preparedStatement.setString(2, flight.getArrival_date());
-                    preparedStatement.setString(3, flight.getDeparture_airport());
-                    preparedStatement.setString(4, flight.getArrival_airport());
+                    preparedStatement.setString(1, flight.getDepartureTime());
+                    preparedStatement.setString(2, flight.getArrivalTime());
+                    preparedStatement.setString(3, flight.getOrigin());
+                    preparedStatement.setString(4, flight.getDestination());
                     preparedStatement.setInt(5, holder.getKey().intValue());
                     return preparedStatement;
                 }
@@ -116,10 +116,10 @@ public class ReservationDao implements Recordable {
         public Flight mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
             Flight flight = new Flight();
             flight.setId(resultSet.getInt(Flight.ID_COLUMN));
-            flight.setArrival_airport(resultSet.getString(Flight.ARRIVAL_AIRPORT_COLUMN));
-            flight.setDeparture_airport(resultSet.getString(Flight.DEPARTURE_AIRPORT_COLUMN));
-            flight.setArrival_date(resultSet.getString(Flight.ARRIVAL_DATE_COLUMN));
-            flight.setDeparture_date(resultSet.getString(Flight.DEPARTURE_DATE_COLUMN));
+            flight.setDestination(resultSet.getString(Flight.ARRIVAL_AIRPORT_COLUMN));
+            flight.setOrigin(resultSet.getString(Flight.DEPARTURE_AIRPORT_COLUMN));
+            flight.setArrivalTime(resultSet.getString(Flight.ARRIVAL_DATE_COLUMN));
+            flight.setDepartureTime(resultSet.getString(Flight.DEPARTURE_DATE_COLUMN));
             flight.setReservation_id(resultSet.getInt(Flight.RESERVATION_ID_COLUMN));
             return flight;
         }
