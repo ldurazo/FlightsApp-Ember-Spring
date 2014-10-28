@@ -7,21 +7,19 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <script type="text/x-handlebars">
-<h1>Flights webapp</h1>
-    <nav class="navbar navbar-default" role="navigation">
-     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        {{#link-to 'search' classNames="btn btn-primary btn-small"}}Search for flights{{/link-to}}
-        {{#link-to 'reserve' classNames="btn btn-primary btn-small"}}Search for reservation{{/link-to}}
-     </nav>
-     {{outlet}}
+    <h1>Flights webapp</h1>
+    <ul class="nav nav-tabs" role="tablist">
+        <li>{{#link-to 'search' class="links-to"}}Search for flights{{/link-to}}<li/>
+        <li>{{#link-to 'reserve'}}Search for reservation{{/link-to}}<li/>
+    </ul>
+    {{outlet}}
 </script>
 
 <script type="text/x-handlebars" data-template-name="search">
-
     <div class="col-md-3" id="main-form">
         <form {{action "searchFlights" on="submit"}} class="input-edit">
 
@@ -33,10 +31,10 @@
             <hr />
 
             <label>From:</label>
-            {{input type="text" class="form-control" placeholder="Departure city" valueBinding = "departureCity"}}
+            {{input type="text" class="form-control" placeholder="Departure city" valueBinding = "departureCity" id="w-departure-search"}}
 
             <label>To:</label>
-            {{input type="text" class="form-control" placeholder="Arrival city" valueBinding = "arrivalCity"}}
+            {{input type="text" class="form-control" placeholder="Arrival city" valueBinding = "arrivalCity" id="w-arrival-search"}}
 
             <div class="row">
                 <div class="col-md-6">
@@ -58,7 +56,7 @@
         </form>
     </div>
 
-    <div id="container" class="col-md-8">
+    <div class="col-md-8">
     {{outlet}}
     <div/>
 </script>
@@ -145,7 +143,7 @@
         </form>
     </div>
 
-    <div id="container" class="col-md-8">
+    <div class="col-md-8">
     {{outlet}}
     <div/>
 </script>
@@ -175,7 +173,9 @@
         </li>
 </script>
 
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="js/libs/jquery-1.10.2.js"></script>
+<script src="js/libs/jquery-ui.js"></script>
 <script src="js/libs/handlebars-1.1.2.js"></script>
 <script src="js/libs/ember-1.7.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.10/ember-data.min.js"></script>
@@ -185,5 +185,57 @@
 <script src="js/router.js"></script>
 <!-- to activate the test runner, add the "?test" query string parameter -->
 <script src="tests/runner.js"></script>
+<script>
+var autocompletar = function(){
+      $( "#w-departure-search" ).autocomplete({
+        select: function (e, ui) {
+            $("#w-departure-search").val(ui.item.label);
+            return false;
+        },
+        minLength: 3,
+        source: function (request, response) {
+            $.ajax({
+                url: 'http://localhost:8080/mvn-webapp-flights/autocomplete',
+                data: request,
+                success: function (data) {
+                    var ParsedObject = $.parseJSON(data);
+                    response($.map(ParsedObject, function (item) {
+                        var results = item.iata_code + " - " + item.city_name;
+                        return {
+                            label: results
+                        };
+
+                    }));
+                }
+            });
+        }
+    });
+    $( "#w-arrival-search" ).autocomplete({
+        select: function (e, ui) {
+            $("#w-arrival-search").val(ui.item.label);
+            return false;
+        },
+        minLength: 3,
+        source: function (request, response) {
+            $.ajax({
+                url: 'http://localhost:8080/mvn-webapp-flights/autocomplete',
+                data: request,
+                success: function (data) {
+                    var ParsedObject = $.parseJSON(data);
+                    response($.map(ParsedObject, function (item) {
+                        var results = item.iata_code + " - " + item.city_name;
+                        return {
+                            label: results
+                        };
+
+                    }));
+                }
+            });
+        }
+    });
+  }
+  $(document).on("click", ".links-to", autocompletar);
+  $(autocompletar);
+  </script>
 </body>
 </html>

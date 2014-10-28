@@ -20,8 +20,8 @@ public class AutocompleteController {
     }
 
     @RequestMapping(value = "/autocomplete", method = RequestMethod.GET)
-    public ResponseEntity<String> getAutocompleteInfo(@RequestParam String city){
-        String suggestions = autocompleteService.getAirportSuggestions(city);
+    public ResponseEntity<String> getAutocompleteInfo(@RequestParam String term){
+        String suggestions = autocompleteService.getAirportSuggestions(term);
         return new ResponseEntity<String>(suggestions, HttpStatus.OK);
     }
 
