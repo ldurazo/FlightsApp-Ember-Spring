@@ -27,7 +27,6 @@ public class SearchController {
         String jsonStringForRequest = searchService.getJsonStringForRequest(search);
         String jsonResponse = searchService.getFlightsAsJsonString(jsonStringForRequest);
 
-
         return new ResponseEntity<String>(jsonResponse, HttpStatus.OK);
     }
 }

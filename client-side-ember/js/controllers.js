@@ -9,17 +9,22 @@ App.BookingController = Ember.ObjectController.extend({
     actions: {
         saveReservation: function(){
             var i,
-            arr = [];
+            arr = [], leg=[];
             this.transitionToRoute('booking')
             name= this.get('userName');
             last_name= this.get('userLastName');
             email=this.get('userMail');
             price = this.get('saleTotal');
             passengersNumber = this.get('controllers.search.passengersNumber');
-            listOfFlights = this.get('slice')[0].segment;
-            for (i=0; i< listOfFlights.length; i++){
-                arr[i] = listOfFlights[i].leg[0];
+            listOfSlice = this.get('slice');
+            for (i=0; i< listOfSlice.length; i++){
+                for(j=0; j< listOfSlice[i].segment.length; j++){
+                    for(k=0; k< listOfSlice[i].segment[j].leg.length; k++){
+                        arr[j] = listOfSlice[i].segment[j].leg[k];
+                    }
+                }
             }
+            console.log(arr);
             bookJson = JSON.stringify({
                 name: name,
                 last_name: last_name,
