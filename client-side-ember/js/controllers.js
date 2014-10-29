@@ -8,18 +8,23 @@ App.BookingController = Ember.ObjectController.extend({
     listOfFlights:null,
     actions: {
         saveReservation: function(){
+            var i,
+            arr = [];
             this.transitionToRoute('booking')
             name= this.get('userName');
             last_name= this.get('userLastName');
             email=this.get('userMail');
             price = this.get('saleTotal');
             passengersNumber = this.get('controllers.search.passengersNumber');
-            listOfFlights = this.get('slice')[0].segment[0].leg;
+            listOfFlights = this.get('slice')[0].segment;
+            for (i=0; i< listOfFlights.length; i++){
+                arr[i] = listOfFlights[i].leg[0];
+            }
             bookJson = JSON.stringify({
                 name: name,
                 last_name: last_name,
                 passengers: passengersNumber,
-                flights: listOfFlights,
+                flights: arr,
                 cost: price,
                 email: email
             });
@@ -37,6 +42,7 @@ App.ReservationController = Ember.ObjectController.extend({});
 
 App.ReserveController = Ember.ObjectController.extend({
       reservationNumber:null,
+      reservationEmail:null,
         actions:{
               searchReservation: function(){
                 this.transitionToRoute('reserve');
@@ -65,10 +71,10 @@ App.SearchController = Ember.ObjectController.extend({
           this.transitionToRoute('search');
           passengersNumber = this.get('passengersNumber');
             //TODO hardcoded stuff, take them out.
-            var departureCity = "LAX";//this.get('departureCity');
-            var departureDate = "2014-12-12";//this.get('departureDate');
-            var arrivalCity = "MEX";//this.get('arrivalCity');
-            var returnDate = "2014-19-12";//this.get('returnDate');
+            var departureCity = this.get('departureCity').substring(0,3);//"LAX";
+            var departureDate = this.get('departureDate');//"2014-12-12";
+            var arrivalCity = this.get('arrivalCity').substring(0,3);//"MEX";
+            var returnDate = this.get('returnDate');//"2014-19-12";
             var passengersNumber = this.get('passengersNumber');
             searchJson = JSON.stringify({
                 origin: departureCity,

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SearchControllerTest {
-    private static String uri = "http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19";
+    private static String uri = "http://localhost:8080/mvn-webapp-flights/search";
     private static TestHttpClient clientForTest;
     private static HttpResponse response;
 

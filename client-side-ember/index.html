@@ -58,7 +58,7 @@
 
     <div class="col-md-8">
     {{outlet}}
-    <div/>
+    </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="flights">
@@ -152,7 +152,7 @@
 
     <div class="col-md-8">
     {{outlet}}
-    <div/>
+    </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="reservation">
@@ -165,6 +165,9 @@
 <label>Last name:</label>
 <label>{{last_name}}</label>
 <br/>
+<label>email:</label>
+<label>{{email}}</label>
+<br/>
 <label>Cost:</label>
 <label>{{cost}}</label>
 <br/>
@@ -172,10 +175,10 @@
 <label>{{passengers}}</label>
         <li class="list-group-item">
                 {{#each flights}}
-                    <label>{{departure_date}}</label>
-                    <label class="label label-default">{{departure_airport}}</label> -
-                    <label>{{arrival_date}}</label>
-                    <label class="label label-default">{{arrival_airport}}</label>
+                    <label>{{departureTime}}</label>
+                    <label class="label label-default">{{origin}}</label> -
+                    <label>{{arrivalTime}}</label>
+                    <label class="label label-default">{{destination}}</label>
                     <hr/>
                 {{else}}
                     <label>No reservation found</label>
