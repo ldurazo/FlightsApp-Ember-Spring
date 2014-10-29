@@ -22,7 +22,7 @@ public class ReservationService {
         this.objectMapper = objectMapper;
     }
 
-    public boolean saveReservation(Reservation reservation){
+    public int saveReservation(Reservation reservation){
         return reservationDao.save(reservation);
     }
 

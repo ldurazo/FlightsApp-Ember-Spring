@@ -35,11 +35,11 @@ public class ReservationDao implements Recordable {
     }
 
     @Override
-    public boolean save(Object record) {
+    public int save(Object record) {
         Reservation reservation = (Reservation) record;
         saveReservationData(reservation);
         saveFlightsOfReservation(reservation);
-        return true;
+        return holder.getKey().intValue();
     }
 
     public void saveReservationData(final Reservation reservation) {

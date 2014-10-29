@@ -23,12 +23,12 @@ public class ReservationController {
 
     @RequestMapping(value = "/reservation", method = RequestMethod.POST, headers = "Content-Type=application/json")
     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
-        boolean statusSaved = reservationService.saveReservation(reservation);
+        int statusSaved = reservationService.saveReservation(reservation);
         String response;
-        if (statusSaved) {
-            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully"));
-        } else {
-            response = objectMapper.objectToJson(new CustomResponse("Something happened, your reservation was not saved"));
+        if(statusSaved>0){
+            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully with id: "+statusSaved+" please keep this number safe"));
+        }else{
+            response = objectMapper.objectToJson(new CustomResponse("Reservation not saved"));
         }
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }
