@@ -201,57 +201,6 @@
 <script src="js/router.js"></script>
 <!-- to activate the test runner, add the "?test" query string parameter -->
 <script src="tests/runner.js"></script>
-<script>
-var autocompletar = function(){
-      $( "#w-departure-search" ).autocomplete({
-        select: function (e, ui) {
-            $("#w-departure-search").val(ui.item.label);
-            return false;
-        },
-        minLength: 3,
-        source: function (request, response) {
-            $.ajax({
-                url: 'http://localhost:8080/mvn-webapp-flights/autocomplete',
-                data: request,
-                success: function (data) {
-                    var ParsedObject = $.parseJSON(data);
-                    response($.map(ParsedObject, function (item) {
-                        var results = item.iata_code + " - " + item.city_name;
-                        return {
-                            label: results
-                        };
-
-                    }));
-                }
-            });
-        }
-    });
-    $( "#w-arrival-search" ).autocomplete({
-        select: function (e, ui) {
-            $("#w-arrival-search").val(ui.item.label);
-            return false;
-        },
-        minLength: 3,
-        source: function (request, response) {
-            $.ajax({
-                url: 'http://localhost:8080/mvn-webapp-flights/autocomplete',
-                data: request,
-                success: function (data) {
-                    var ParsedObject = $.parseJSON(data);
-                    response($.map(ParsedObject, function (item) {
-                        var results = item.iata_code + " - " + item.city_name;
-                        return {
-                            label: results
-                        };
-
-                    }));
-                }
-            });
-        }
-    });
-  }
-  $(document).on("keydown", "#w-departure-search", autocompletar);
-  $(document).on("keydown", "#w-arrival-search", autocompletar);
-  </script>
+<script src="js/autocomplete.js"></script>
 </body>
 </html>
