@@ -8,6 +8,9 @@ public class SearchRequestQpx {
     public SearchRequestQpx(SearchRequest searchRequest) {
         this.request = new HashMap<String, Object>();
         this.slice[0] = new Slice(searchRequest.getOrigin(), searchRequest.getDestination(), searchRequest.getDate());
+        if(!searchRequest.getIsOneWay()){
+            this.slice[1] = new Slice(searchRequest.getDestination(), searchRequest.getOrigin(), searchRequest.getReturnDate());
+        }
         this.passengers = new Passenger(searchRequest.getPassengers());
         this.solutions = searchRequest.getSolutions();
 
@@ -31,7 +34,7 @@ public class SearchRequestQpx {
     //endregion
 
     //region slice
-    private Object[] slice = new Object[1];
+    private Object[] slice = new Object[2];
 
     public class Slice {
         public static final String SLICE = "slice";

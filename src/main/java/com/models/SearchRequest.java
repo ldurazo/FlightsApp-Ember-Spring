@@ -1,21 +1,33 @@
 package com.models;
 
 public class SearchRequest {
+    private boolean isOneWay;
     private String origin;
     private String destination;
     private int passengers;
     private String date;
+    private String returnDate;
     private int solutions;
 
     @Override
     public String toString() {
         return "SearchRequest{" +
-                "origin='" + origin + '\'' +
+                "isOneWay=" + isOneWay +
+                ", origin='" + origin + '\'' +
                 ", destination='" + destination + '\'' +
                 ", passengers=" + passengers +
                 ", date='" + date + '\'' +
+                ", returnDate='" + returnDate + '\'' +
                 ", solutions=" + solutions +
                 '}';
+    }
+
+    public boolean getIsOneWay() {
+        return isOneWay;
+    }
+
+    public void setOneWay(boolean oneWay) {
+        this.isOneWay = oneWay;
     }
 
     public String getOrigin() {
@@ -40,6 +52,14 @@ public class SearchRequest {
 
     public void setPassengers(int passengers) {
         this.passengers = passengers;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 
     public String getDate() {

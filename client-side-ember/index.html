@@ -13,7 +13,7 @@
 <script type="text/x-handlebars">
     <h1>Flights webapp</h1>
     <ul class="nav nav-tabs" role="tablist">
-        <li>{{#link-to 'search' class="links-to"}}Search for flights{{/link-to}}<li/>
+        <li>{{#link-to 'search'}}Search for flights{{/link-to}}<li/>
         <li>{{#link-to 'reserve'}}Search for reservation{{/link-to}}<li/>
     </ul>
     {{outlet}}
@@ -24,7 +24,7 @@
         <form {{action "searchFlights" on="submit"}} class="input-edit">
 
             <label>One way trip?</label>
-            {{view App.TripCheck action='tripType' checked=isRoundTrip}}
+            {{view App.TripCheck action='tripType' checked=isOneWay}}
 
             <label>Passengers:</label>
             {{view Ember.Select content=passengerslimit valueBinding = "passengersNumber"}}
@@ -46,7 +46,7 @@
                 <div class="col-md-6">
 
                     <label>Return:</label>
-                    {{input type="date" class="form-control" id="returning-date" valueBinding = "returnDate" disabled=isRoundTrip}}
+                    {{input type="date" class="form-control" id="returning-date" valueBinding = "returnDate" disabled=isOneWay}}
 
                 </div>
             </div>
@@ -63,7 +63,6 @@
 
 <script type="text/x-handlebars" data-template-name="flights">
         <ul id="flight-list" class="list-group">
-        <label>Select your flight by clicking the radio button</label>
         {{#each}}
         <li class="list-group-item">
             <div class="col-md-6">
@@ -94,48 +93,49 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="booking">
-<form {{action "saveReservation" on="submit"}} class="input-edit">
-    <div class="col-md-6">
-        <h3>Reservation info.</h3>
-        <label>name:</label>
-        {{input type="text" class="form-control" placeholder="Name" valueBinding = "userName"}}
-        <label>last name:</label>
-        {{input type="text" class="form-control" placeholder="Last Name" valueBinding = "userLastName"}}
-        <label>email:</label>
-        {{input type="text" class="form-control" placeholder="E-Mail" valueBinding = "userMail"}}
-        <label>Price:</label>
-        <br/>
-        <label>{{saleTotal}}</label>
-        <br/>
-        <label>Passengers:</label>
-        <br/>
-        <label>{{controllers.search.passengersNumber}}</label>
-        {{input type="submit" value="Save reservation" class="btn" id="booking-btn"}}
+    <div class="col-md-4">
+        <form {{action "saveReservation" on="submit"}} class="input-edit" id="booking-form">
+            <h3>Reservation info.</h3>
+            <label>name:</label>
+            {{input type="text" class="form-control" placeholder="Name" valueBinding = "userName"}}
+            <label>last name:</label>
+            {{input type="text" class="form-control" placeholder="Last Name" valueBinding = "userLastName"}}
+            <label>email:</label>
+            {{input type="text" class="form-control" placeholder="E-Mail" valueBinding = "userMail"}}
+            <label>Price:</label>
+            <br/>
+            <label>{{saleTotal}}</label>
+            <br/>
+            <label>Passengers:</label>
+            <br/>
+            <label>{{controllers.search.passengersNumber}}</label>
+            <br/>
+            {{input type="submit" value="Save reservation" class="btn" id="booking-btn"}}
 
+        </form>
     </div>
-    <div class="col-md-6">
-        <h4>List of Flights</h4>
-                {{#each slice}}
-                {{#each segment}}
-                {{#each leg}}
-                    <li class="list-group-item">
-                        <label>Departure Airport:</label>
-                        <label class="label label-default"> {{origin}}</label>
-                        <hr/>
-                        <label>Departure Time:</label>
-                        <label class="label label-default">{{departureTime}}</label>
-                        <hr/>
-                        <label>Arrival Airport:</label>
-                        <label class="label label-default">{{destination}}</label>
-                        <hr/>
-                        <label>Arrival Time:</label>
-                        <label class="label label-default"> {{arrivalTime}}</label>
-                    </li>
-                {{/each}}
-                {{/each}}
-                {{/each}}
+    <div class="col-md-8">
+            <h4>List of Flights</h4>
+                    {{#each slice}}
+                    {{#each segment}}
+                    {{#each leg}}
+                        <li class="list-group-item">
+                            <label>Departure Airport:</label>
+                            <label class="label label-default"> {{origin}}</label>
+                            <hr/>
+                            <label>Departure Time:</label>
+                            <label class="label label-default">{{departureTime}}</label>
+                            <hr/>
+                            <label>Arrival Airport:</label>
+                            <label class="label label-default">{{destination}}</label>
+                            <hr/>
+                            <label>Arrival Time:</label>
+                            <label class="label label-default"> {{arrivalTime}}</label>
+                        </li>
+                    {{/each}}
+                    {{/each}}
+                    {{/each}}
     </div>
-</form>
 </script>
 
 <script type="text/x-handlebars" data-template-name="booked">

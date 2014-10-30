@@ -14,6 +14,13 @@ body{
     padding:15px;
 }
 
+#booking-form{
+    background-color:#f9f9f9;
+    border:1px solid #ddd;
+    box-shadow:2px 3px 3px rgba(245,245,245,.8);
+    padding:15px;
+}
+
 #main-form label{
     font-weight:100;
 }
@@ -50,6 +57,24 @@ body{
 
 #search-btn{
     width:100%;
+    margin-top:20px;
+    background-color:#3498db;
+    border:1px solid #2980b9;
+    color:#f9f9f9;
+    letter-spacing:1px;
+}
+
+#booking-btn{
+    width:100%;
+    margin-top:20px;
+    background-color:#3498db;
+    border:1px solid #2980b9;
+    color:#f9f9f9;
+    letter-spacing:1px;
+}
+
+#look-round-btn{
+    width:20%;
     margin-top:20px;
     background-color:#3498db;
     border:1px solid #2980b9;

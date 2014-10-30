@@ -8,7 +8,7 @@ App.BookingController = Ember.ObjectController.extend({
     listOfFlights:null,
     actions: {
         saveReservation: function(){
-            var i,
+            var i,j,k,
             arr = [], leg=[];
             this.transitionToRoute('booking')
             name= this.get('userName');
@@ -20,11 +20,10 @@ App.BookingController = Ember.ObjectController.extend({
             for (i=0; i< listOfSlice.length; i++){
                 for(j=0; j< listOfSlice[i].segment.length; j++){
                     for(k=0; k< listOfSlice[i].segment[j].leg.length; k++){
-                        arr[j] = listOfSlice[i].segment[j].leg[k];
+                        arr.push(listOfSlice[i].segment[j].leg[k])
                     }
                 }
             }
-            console.log(arr);
             bookJson = JSON.stringify({
                 name: name,
                 last_name: last_name,
@@ -39,7 +38,7 @@ App.BookingController = Ember.ObjectController.extend({
     }
 });
 
-App.BookedControler=Ember.ObjectController.extend({});
+App.BookedController=Ember.ObjectController.extend({});
 
 App.FlightsController = Ember.ArrayController.extend({});
 
@@ -66,24 +65,22 @@ App.SearchController = Ember.ObjectController.extend({
       returnDate:null,
       passengersNumber:null,
       reservationEmail:null,
-      isRoundTrip : false,
+      isOneWay:false,
       actions: {
-          tripType: function(){
-            isRoundTrip = this.get('isRoundTrip');
-            console.log(isRoundTrip);
-          },
           searchFlights: function(){
           this.transitionToRoute('search');
           passengersNumber = this.get('passengersNumber');
-            //TODO hardcoded stuff, take them out.
+            var isOneWay = this.get('isOneWay');
             var departureCity = this.get('departureCity').substring(0,3);//"LAX";
             var departureDate = this.get('departureDate');//"2014-12-12";
             var arrivalCity = this.get('arrivalCity').substring(0,3);//"MEX";
             var returnDate = this.get('returnDate');//"2014-19-12";
             var passengersNumber = this.get('passengersNumber');
             searchJson = JSON.stringify({
+                isOneWay:isOneWay,
                 origin: departureCity,
                 destination: arrivalCity,
+                returnDate: returnDate,
                 date: departureDate,
                 passengers: passengersNumber
             });
