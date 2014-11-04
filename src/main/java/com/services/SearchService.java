@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SearchService {
@@ -42,6 +40,6 @@ public class SearchService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return qpxResponse;
+        return "No flights found";
     }
 }
