@@ -34,12 +34,14 @@ public class AirportDao {
         return dataSource;
     }
 
-    public List<Airport> getAirportName(String userInput){
-        final String airportsQuery = " SELECT * FROM AIRPORTS WHERE city ilike '%"+userInput+"%' limit 10";
+    public List<Airport> getAirportName(final String userInput){
+        final String airportsQuery = " SELECT * FROM AIRPORTS WHERE city ilike ? limit 10";
         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                return connection.prepareStatement(airportsQuery);
+                PreparedStatement preparedStatement = connection.prepareStatement(airportsQuery);
+                preparedStatement.setString(1, "%"+userInput+"%");
+                return preparedStatement;
             }
         };
         return jdbcTemplate.query(preparedStatementCreator, new AirportMapper());
