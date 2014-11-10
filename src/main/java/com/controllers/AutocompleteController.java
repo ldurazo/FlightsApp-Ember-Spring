@@ -21,6 +21,7 @@ public class AutocompleteController {
 
     @RequestMapping(value = "/autocomplete", method = RequestMethod.GET)
     public ResponseEntity<String> getAutocompleteInfo(@RequestParam String term){
+        // what if term equals "' OR 0 = 0; DELETE FROM reservations; --"
         String suggestions = autocompleteService.getAirportSuggestions(term);
         return new ResponseEntity<String>(suggestions, HttpStatus.OK);
     }

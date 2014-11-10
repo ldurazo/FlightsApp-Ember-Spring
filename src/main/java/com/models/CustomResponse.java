@@ -1,5 +1,6 @@
 package com.models;
 
+// What is this?
 public class CustomResponse {
     public CustomResponse(String message) {
         this.message = message;

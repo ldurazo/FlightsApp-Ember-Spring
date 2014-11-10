@@ -6,7 +6,7 @@ import java.util.List;
 
 //TODO ask bany for a better pc or more memory or solid state disk
 
-
+// What is a TripOption?
 public class TripOption {
 
     private List<Slice> slices;
@@ -39,12 +39,14 @@ public class TripOption {
                 '}';
     }
 
+    // What is a Slice and why is it static?
     public static class Slice {
 
         @JsonProperty("segment")
         List<SliceSegment> segments;
 
         @Override
+        // Why are we overwriting the toString method?
         public String toString() {
             return "Slice{" +
                     "segments=" + segments +

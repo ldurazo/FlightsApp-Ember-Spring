@@ -3,6 +3,7 @@ package com.models;
 import java.util.HashMap;
 import java.util.Map;
 
+// What is a SearchRequestQpx
 public class SearchRequestQpx {
 
     public SearchRequestQpx(SearchRequest searchRequest) {

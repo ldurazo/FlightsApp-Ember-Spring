@@ -63,6 +63,7 @@ public class Flight {
         this.reservation_id = reservation_id;
     }
 
+    // Why are we overwriting the toString method?
     @Override
     public String toString() {
         return "Flight{" +

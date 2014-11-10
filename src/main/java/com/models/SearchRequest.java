@@ -1,5 +1,6 @@
 package com.models;
 
+// What is a Search Request?
 public class SearchRequest {
     private boolean isOneWay;
     private String origin;
@@ -9,6 +10,7 @@ public class SearchRequest {
     private String returnDate;
     private int solutions;
 
+    // Why are we overwriting the toString method?
     @Override
     public String toString() {
         return "SearchRequest{" +

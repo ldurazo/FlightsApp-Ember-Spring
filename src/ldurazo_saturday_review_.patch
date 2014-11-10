@@ -1,0 +1,431 @@
+Index: src/main/java/com/models/SearchRequestQpx.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/models/SearchRequestQpx.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/models/SearchRequestQpx.java	(revision )
+@@ -3,6 +3,7 @@
+ import java.util.HashMap;
+ import java.util.Map;
+ 
++// What is a SearchRequestQpx
+ public class SearchRequestQpx {
+ 
+     public SearchRequestQpx(SearchRequest searchRequest) {
+Index: src/main/java/com/controllers/ReservationController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/controllers/ReservationController.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/controllers/ReservationController.java	(revision )
+@@ -7,7 +7,11 @@
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.http.HttpStatus;
+ import org.springframework.http.ResponseEntity;
+-import org.springframework.web.bind.annotation.*;
++import org.springframework.web.bind.annotation.PathVariable;
++import org.springframework.web.bind.annotation.RequestBody;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RequestMethod;
++import org.springframework.web.bind.annotation.RestController;
+ 
+ @RestController
+ public class ReservationController {
+@@ -25,10 +29,10 @@
+     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
+         int statusSaved = reservationService.saveReservation(reservation);
+         String response;
+-        if(statusSaved>0){
++        if (statusSaved > 0) {
+-            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully with id: "+statusSaved+" please keep this number safe"));
++            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully with id: " + statusSaved + " please keep this number safe"));
+-        }else{
++        } else {
+-            response = objectMapper.objectToJson(new CustomResponse("Reservation not saved"));
++            response = objectMapper.objectToJson(new CustomResponse("Reservation not saved")); // why did the reservation fail?, is the database?, problem parsing?, how would you know in the future if there was an error? :-)
+         }
+         return new ResponseEntity<String>(response, HttpStatus.OK);
+     }
+@@ -37,7 +41,7 @@
+     @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
+     public ResponseEntity<String> retrieveReservation(@PathVariable int id) {
+         String errorResponse;
+-        String json = reservationService.getReservationAsJson(id);
++        String json = reservationService.getReservationResponse(id);
+         return new ResponseEntity<String>(json, HttpStatus.OK);
+     }
+ 
+Index: src/main/java/com/models/Reservation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/models/Reservation.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/models/Reservation.java	(revision )
+@@ -23,6 +23,7 @@
+         this.flights = new ArrayList<Flight>();
+     }
+ 
++    // Why are we overwriting the toString method?
+     public Reservation(String name,
+                        String last_name,
+                        int passengers,
+Index: src/main/java/com/models/CustomResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/models/CustomResponse.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/models/CustomResponse.java	(revision )
+@@ -1,5 +1,6 @@
+ package com.models;
+ 
++// What is this?
+ public class CustomResponse {
+     public CustomResponse(String message) {
+         this.message = message;
+Index: src/main/java/com/dao/AirportDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/dao/AirportDao.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/dao/AirportDao.java	(revision )
+@@ -35,14 +35,17 @@
+     }
+ 
+     public List<Airport> getAirportName(String userInput){
+-        final String airportsQuery = " SELECT * FROM AIRPORTS WHERE city ilike '%"+userInput+"%' limit 10";
+-        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+-            @Override
+-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+-                return connection.prepareStatement(airportsQuery);
+-            }
+-        };
+-        return jdbcTemplate.query(preparedStatementCreator, new AirportMapper());
++        // you are not using a prepared statement here, if the input were a sql input something wrong could happen here.
++//        final String airportsQuery = " SELECT * FROM AIRPORTS WHERE city ilike '%"+userInput+"%' limit 10";
++//        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
++//            @Override
++//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
++//                return connection.prepareStatement(airportsQuery);
++//            }
++//        };
++
++        final String airportsQuery = "SELECT * FROM AIRPORTS WHERE city ILIKE '%?%' limit 10"; // is there any important info from the airports in order to sort them?
++        return jdbcTemplate.query(airportsQuery, new Object[] {userInput}, new AirportMapper()); // send the user input in the arguments for the query.
+     }
+ 
+     public class AirportMapper implements RowMapper<Airport> {
+Index: src/main/java/com/dao/Recordable.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/dao/Recordable.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/dao/Recordable.java	(revision )
+@@ -3,7 +3,7 @@
+ /**
+  * Created by ldurazo on 10/7/14.
+  */
+-public interface Recordable {
+-    public int save(Object record);
+-    public Object getRecord(int id);
++public interface Recordable<T> {
++    public int save(T record);
++    public T getRecord(int id);
+ }
+Index: src/main/java/com/models/Airport.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/models/Airport.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/models/Airport.java	(revision )
+@@ -15,6 +15,7 @@
+     private double latitude;
+     private double longitude;
+ 
++    // Why are we overwriting the toString method?
+     @Override
+     public String toString() {
+         return "Airport{" +
+Index: src/main/java/com/models/Flight.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/models/Flight.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/models/Flight.java	(revision )
+@@ -63,6 +63,7 @@
+         this.reservation_id = reservation_id;
+     }
+ 
++    // Why are we overwriting the toString method?
+     @Override
+     public String toString() {
+         return "Flight{" +
+Index: src/main/java/com/services/ReservationService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/services/ReservationService.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/services/ReservationService.java	(revision )
+@@ -18,7 +18,7 @@
+     private ReservationDao reservationDao;
+ 
+     @Autowired
+-    public ReservationService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator) {
++    public ReservationService(GlobalObjectMapper objectMapper) {
+         this.objectMapper = objectMapper;
+     }
+ 
+@@ -26,8 +26,8 @@
+         return reservationDao.save(reservation);
+     }
+ 
+-    public String getReservationAsJson(int id) {
+-        Reservation reservation = (Reservation) reservationDao.getRecord(id);
++    public String getReservationResponse(int id) {
++        Reservation reservation = reservationDao.getRecord(id);
+         if(reservation == null){
+             Map<String, Object> responseWrapper = new HashMap<String, Object>();
+             responseWrapper.put("error", "Reservation not found");
+Index: src/main/java/com/dao/ReservationDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/dao/ReservationDao.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/dao/ReservationDao.java	(revision )
+@@ -16,7 +16,7 @@
+ import java.util.List;
+ 
+ @Component
+-public class ReservationDao implements Recordable {
++public class ReservationDao implements Recordable<Reservation> {
+     //TODO ask or investigate if this holder should be injected somehow
+     private KeyHolder holder = new GeneratedKeyHolder();
+ 
+@@ -35,8 +35,8 @@
+     }
+ 
+     @Override
+-    public int save(Object record) {
+-        Reservation reservation = (Reservation) record;
++    public int save(Reservation record) {
++        Reservation reservation = record;
+         saveReservationData(reservation);
+         saveFlightsOfReservation(reservation);
+         return holder.getKey().intValue();
+@@ -46,10 +46,8 @@
+         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+             @Override
+             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+-                //Be aware that the order of columns must be respected
+                 String query = "INSERT INTO RESERVATIONS (name, last_name, passengers, cost, email) VALUES(?, ?, ?, ?, ?)";
+                 PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
+-                //Notice that the following magic number are from this particular scope to fill the query placeholders
+                 preparedStatement.setString(1, reservation.getName());
+                 preparedStatement.setString(2, reservation.getLast_name());
+                 preparedStatement.setInt(3, reservation.getPassengers());
+@@ -67,10 +65,8 @@
+             PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+                 @Override
+                 public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+-                    //Be aware that the order of columns must be respected
+                     String query = "INSERT INTO FLIGHTS (departure_date, arrival_date, departure_airport, arrival_airport, reservation_id) VALUES(?, ?, ?, ?, ?)";
+                     PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
+-                    //Notice that the following magic number are from this particular scope to fill the query placeholders
+                     preparedStatement.setString(1, flight.getDepartureTime());
+                     preparedStatement.setString(2, flight.getArrivalTime());
+                     preparedStatement.setString(3, flight.getOrigin());
+@@ -84,15 +80,18 @@
+     }
+ 
+     @Override
+-    public Object getRecord(int id) {
++    public Reservation getRecord(int id) {
+         try {
+-            String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
+-            Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new ReservationRowMapper());
+-            String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id=" + id;
+-            List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new FlightsRowMapper());
++            // We should not concatenate parameters, even if id is an int.
++            String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID = ?";
++            Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new Object[] {id}, new ReservationRowMapper());
++            String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id = ?";
++            List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new Object[] {id}, new FlightsRowMapper());
+             reservation.setFlights(flightList);
+             return reservation;
+         } catch (EmptyResultDataAccessException e){
++            // why null? what about:
++            // return new Reservation();
+             return null;
+         }
+     }
+\ No newline at end of file
+Index: src/main/java/com/controllers/AutocompleteController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/controllers/AutocompleteController.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/controllers/AutocompleteController.java	(revision )
+@@ -21,6 +21,7 @@
+ 
+     @RequestMapping(value = "/autocomplete", method = RequestMethod.GET)
+     public ResponseEntity<String> getAutocompleteInfo(@RequestParam String term){
++        // what if term equals "' OR 0 = 0; DELETE FROM reservations; --"
+         String suggestions = autocompleteService.getAirportSuggestions(term);
+         return new ResponseEntity<String>(suggestions, HttpStatus.OK);
+     }
+Index: src/main/java/com/models/SearchRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/models/SearchRequest.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/models/SearchRequest.java	(revision )
+@@ -1,5 +1,6 @@
+ package com.models;
+ 
++// What is a Search Request?
+ public class SearchRequest {
+     private boolean isOneWay;
+     private String origin;
+@@ -9,6 +10,7 @@
+     private String returnDate;
+     private int solutions;
+ 
++    // Why are we overwriting the toString method?
+     @Override
+     public String toString() {
+         return "SearchRequest{" +
+Index: src/main/java/com/services/AutocompleteService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/services/AutocompleteService.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/services/AutocompleteService.java	(revision )
+@@ -23,6 +23,7 @@
+     }
+ 
+     public String getAirportSuggestions(String userInput){
++        // we did not clean or did something with the input at the controller...
+         List<Airport> airportList = airportDao.getAirportName(userInput);
+         if(airportList.isEmpty()){
+             Map<String, Object> responseMap = new HashMap<String, Object>();
+Index: src/main/java/com/models/TripOption.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/models/TripOption.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/models/TripOption.java	(revision )
+@@ -6,7 +6,7 @@
+ 
+ //TODO ask bany for a better pc or more memory or solid state disk
+ 
+-
++// What is a TripOption?
+ public class TripOption {
+ 
+     private List<Slice> slices;
+@@ -39,12 +39,14 @@
+                 '}';
+     }
+ 
++    // What is a Slice and why is it static?
+     public static class Slice {
+ 
+         @JsonProperty("segment")
+         List<SliceSegment> segments;
+ 
+         @Override
++        // Why are we overwriting the toString method?
+         public String toString() {
+             return "Slice{" +
+                     "segments=" + segments +
+Index: src/main/java/com/services/SearchService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/services/SearchService.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/services/SearchService.java	(revision )
+@@ -30,7 +30,33 @@
+         return jsonRequestParser.createJsonStringSearchRequest(searchRequestQpx);
+     }
+ 
++    // so the service is for a Search but you return Flights in a string.
++    // also a little complex to understand, I see that we are going to return only a stringified json object
++    // but what does node.get("trips") and "tripOption" mean for the service?, I think this
++    // logic should be a little bit more deep (even if this is as simple as just get a value)
+     public String getFlightsAsJsonString(String jsonStringForRequest){
++        // what this should do is something like
++        // I used a connectorFactory but not needed, you could just hardcore the QpxConnector.
++        //
++        // ### Interesting question for you to solve:
++        // What if I created an user story that would be:
++        // -- As the system I want to be able to obtain flights from different Flight apis
++        //  Ex: Qpx/ITASoftware, Sabre, FlightStats, Despegar.com
++        //
++        // :-) not needed, but would help a lot more...
++        //
++        // My point is, if the service is called SearchService, why does it parse and generate a flight list
++        // converts it to json and then it returns it.
++        //
++        // Remember: S in SOLID is for Single responsibility, the service responsibility is just to call the
++        // responsible objects that will do the work and return a general response for the Controller.
++        //
++        // FlightConnector connector = connectorFactory.createConnector("qpx");
++        // List<Flight> flights = connector.getAvailableFlights();
++        // ...
++        // do whatever we want with the flights (as set our Airport object to detail it more, see prices, see promotions)
++        // ...
++        // return convertListToJson(flights);
+         String qpxResponse = qpxRestOperator.getFlightsFromQpxAsJsonString(jsonStringForRequest);
+         try {
+             JsonNode node = objectMapper.readTree(qpxResponse);
+Index: src/main/java/com/controllers/SearchController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/controllers/SearchController.java	(revision 6421d83c2b717dc2e0dfeadbc43c52c775c3142d)
++++ src/main/java/com/controllers/SearchController.java	(revision )
+@@ -9,6 +9,7 @@
+ import org.springframework.web.bind.annotation.*;
+ 
+ @RestController
++// this controller is weird (does not tell me anything about what it does)
+ public class SearchController {
+     private SearchService searchService;
+ 
+@@ -19,12 +20,19 @@
+ 
+     @RequestMapping(value="/search", produces="application/json", method = RequestMethod.POST, headers = "Content-Type=application/json")
+     public @ResponseBody ResponseEntity<String> search(@RequestBody SearchRequest searchRequest) {
+-        //TODO this should not be hardcoded, find a way to make it a feature
++
++        // first, we are going to do a search?, the user sent us a SearchRequest, so the front-end does generate
++        // the search request, now we just return a search?
++        // I think you should rename this method to getAvailableFlights or I dont know, getAirAvailability.
++
++        //TODO this should not be hardcoded, find a way to make it a feature // yah, what is a solution?
+         searchRequest.setSolutions(10);
+         //Logic to parse the parameters as json
+         SearchRequestQpx search = new SearchRequestQpx(searchRequest);
+ 
++        // var name should be "request"
+         String jsonStringForRequest = searchService.getJsonStringForRequest(search);
++        // var name should be "response"
+         String jsonResponse = searchService.getFlightsAsJsonString(jsonStringForRequest);
+ 
+         return new ResponseEntity<String>(jsonResponse, HttpStatus.OK);
+\ No newline at end of file

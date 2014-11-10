@@ -15,6 +15,7 @@ public class Airport {
     private double latitude;
     private double longitude;
 
+    // Why are we overwriting the toString method?
     @Override
     public String toString() {
         return "Airport{" +

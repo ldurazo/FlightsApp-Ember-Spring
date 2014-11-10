@@ -18,7 +18,7 @@ public class ReservationService {
     private ReservationDao reservationDao;
 
     @Autowired
-    public ReservationService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator) {
+    public ReservationService(GlobalObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -26,8 +26,8 @@ public class ReservationService {
         return reservationDao.save(reservation);
     }
 
-    public String getReservationAsJson(int id) {
-        Reservation reservation = (Reservation) reservationDao.getRecord(id);
+    public String getReservationResponse(int id) {
+        Reservation reservation = reservationDao.getRecord(id);
         if(reservation == null){
             Map<String, Object> responseWrapper = new HashMap<String, Object>();
             responseWrapper.put("error", "Reservation not found");

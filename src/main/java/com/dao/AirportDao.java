@@ -35,14 +35,17 @@ public class AirportDao {
     }
 
     public List<Airport> getAirportName(String userInput){
-        final String airportsQuery = " SELECT * FROM AIRPORTS WHERE city ilike '%"+userInput+"%' limit 10";
-        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                return connection.prepareStatement(airportsQuery);
-            }
-        };
-        return jdbcTemplate.query(preparedStatementCreator, new AirportMapper());
+        // you are not using a prepared statement here, if the input were a sql input something wrong could happen here.
+//        final String airportsQuery = " SELECT * FROM AIRPORTS WHERE city ilike '%"+userInput+"%' limit 10";
+//        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
+//            @Override
+//            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+//                return connection.prepareStatement(airportsQuery);
+//            }
+//        };
+
+        final String airportsQuery = "SELECT * FROM AIRPORTS WHERE city ILIKE '%?%' limit 10"; // is there any important info from the airports in order to sort them?
+        return jdbcTemplate.query(airportsQuery, new Object[] {userInput}, new AirportMapper()); // send the user input in the arguments for the query.
     }
 
     public class AirportMapper implements RowMapper<Airport> {

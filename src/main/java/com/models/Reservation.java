@@ -23,6 +23,7 @@ public class Reservation {
         this.flights = new ArrayList<Flight>();
     }
 
+    // Why are we overwriting the toString method?
     public Reservation(String name,
                        String last_name,
                        int passengers,

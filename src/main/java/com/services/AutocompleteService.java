@@ -23,6 +23,7 @@ public class AutocompleteService {
     }
 
     public String getAirportSuggestions(String userInput){
+        // we did not clean or did something with the input at the controller...
         List<Airport> airportList = airportDao.getAirportName(userInput);
         if(airportList.isEmpty()){
             Map<String, Object> responseMap = new HashMap<String, Object>();

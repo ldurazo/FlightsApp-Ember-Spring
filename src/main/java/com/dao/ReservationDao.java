@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.List;
 
 @Component
-public class ReservationDao implements Recordable {
+public class ReservationDao implements Recordable<Reservation> {
     //TODO ask or investigate if this holder should be injected somehow
     private KeyHolder holder = new GeneratedKeyHolder();
 
@@ -35,8 +35,8 @@ public class ReservationDao implements Recordable {
     }
 
     @Override
-    public int save(Object record) {
-        Reservation reservation = (Reservation) record;
+    public int save(Reservation record) {
+        Reservation reservation = record;
         saveReservationData(reservation);
         saveFlightsOfReservation(reservation);
         return holder.getKey().intValue();
@@ -46,10 +46,8 @@ public class ReservationDao implements Recordable {
         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                //Be aware that the order of columns must be respected
                 String query = "INSERT INTO RESERVATIONS (name, last_name, passengers, cost, email) VALUES(?, ?, ?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
-                //Notice that the following magic number are from this particular scope to fill the query placeholders
                 preparedStatement.setString(1, reservation.getName());
                 preparedStatement.setString(2, reservation.getLast_name());
                 preparedStatement.setInt(3, reservation.getPassengers());
@@ -67,10 +65,8 @@ public class ReservationDao implements Recordable {
             PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
                 @Override
                 public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                    //Be aware that the order of columns must be respected
                     String query = "INSERT INTO FLIGHTS (departure_date, arrival_date, departure_airport, arrival_airport, reservation_id) VALUES(?, ?, ?, ?, ?)";
                     PreparedStatement preparedStatement = connection.prepareStatement(query, new String[]{"id"});
-                    //Notice that the following magic number are from this particular scope to fill the query placeholders
                     preparedStatement.setString(1, flight.getDepartureTime());
                     preparedStatement.setString(2, flight.getArrivalTime());
                     preparedStatement.setString(3, flight.getOrigin());
@@ -84,19 +80,21 @@ public class ReservationDao implements Recordable {
     }
 
     @Override
-    public Object getRecord(int id) {
+    public Reservation getRecord(int id) {
         try {
-            String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
-            Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new ReservationRowMapper());
-            String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id=" + id;
-            List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new FlightsRowMapper());
+            // We should not concatenate parameters, even if id is an int.
+            String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID = ?";
+            Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new Object[] {id}, new ReservationRowMapper());
+            String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id = ?";
+            List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new Object[] {id}, new FlightsRowMapper());
             reservation.setFlights(flightList);
             return reservation;
         } catch (EmptyResultDataAccessException e){
+            // why null? what about:
+            // return new Reservation();
             return null;
         }
     }
-
     public class ReservationRowMapper implements RowMapper<Reservation> {
         @Override
         public Reservation mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
