@@ -84,16 +84,18 @@ public class ReservationDao implements Recordable {
     }
 
     @Override
-    public Object getRecord(int id) {
+    public Object getRecord(final int id, final String email) {
         try {
-            String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=" + id;
-            Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery, new ReservationRowMapper());
-            String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id=" + id;
-            List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery, new FlightsRowMapper());
-            reservation.setFlights(flightList);
+            String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=? AND EMAIL=?";
+            Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery,new Object[]{id,email}, new ReservationRowMapper());
+            if(reservation!=null){
+                String selectFromFlightsQuery = "SELECT * FROM FLIGHTS WHERE reservation_id=?";
+                List<Flight> flightList = jdbcTemplate.query(selectFromFlightsQuery,new Object[]{id}, new FlightsRowMapper());
+                reservation.setFlights(flightList);
+            }
             return reservation;
         } catch (EmptyResultDataAccessException e){
-            return null;
+            return new Reservation();
         }
     }
 

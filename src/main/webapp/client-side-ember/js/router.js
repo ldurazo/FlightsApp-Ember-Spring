@@ -18,7 +18,7 @@ App.ApplicationRoute = Ember.Route.extend({});
 
 App.ReservationRoute = Ember.Route.extend({
     model: function() {
-        return $.getJSON("http://localhost:8080/mvn-webapp-flights/reservation/"+reservationId, function(data) {
+        return $.getJSON("http://localhost:8080/mvn-webapp-flights/reservation/"+reservationId+"/"+rEmail+"/", function(data) {
             return data;
         });
     }

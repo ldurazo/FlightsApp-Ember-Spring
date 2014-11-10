@@ -34,10 +34,9 @@ public class ReservationController {
     }
 
     //TODO add email and name as path variables
-    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
-    public ResponseEntity<String> retrieveReservation(@PathVariable int id) {
-        String errorResponse;
-        String json = reservationService.getReservationResponse(id);
+    @RequestMapping(value = "/reservation/{id}/{email}/", method = RequestMethod.GET)
+    public ResponseEntity<String> retrieveReservation(@PathVariable("id") int id, @PathVariable("email") String email) {
+        String json = reservationService.getReservationResponse(id, email);
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 

@@ -5,5 +5,5 @@ package com.dao;
  */
 public interface Recordable {
     public int save(Object record);
-    public Object getRecord(int id);
+    public Object getRecord(final int id,final String email);
 }

@@ -51,6 +51,7 @@ App.ReserveController = Ember.ObjectController.extend({
               searchReservation: function(){
                 this.transitionToRoute('reserve');
                 reservationId = this.get('reservationNumber');
+                rEmail = this.get('reservationEmail');
                 var reservationEmail = this.get('reservationEmail');
                 this.transitionToRoute('reservation');
               }
