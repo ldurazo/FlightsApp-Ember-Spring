@@ -26,7 +26,7 @@ public class ReservationService {
         return reservationDao.save(reservation);
     }
 
-    public String getReservationAsJson(int id) {
+    public String getReservationResponse(int id) {
         Reservation reservation = (Reservation) reservationDao.getRecord(id);
         if(reservation == null){
             Map<String, Object> responseWrapper = new HashMap<String, Object>();

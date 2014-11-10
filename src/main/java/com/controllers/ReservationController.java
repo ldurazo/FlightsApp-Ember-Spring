@@ -25,9 +25,9 @@ public class ReservationController {
     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
         int statusSaved = reservationService.saveReservation(reservation);
         String response;
-        if(statusSaved>0){
-            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully with id: "+statusSaved+" please keep this number safe"));
-        }else{
+        if (statusSaved > 0) {
+            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully with id: " + statusSaved + " please keep this number safe"));
+        } else {
             response = objectMapper.objectToJson(new CustomResponse("Reservation not saved"));
         }
         return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class ReservationController {
     @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
     public ResponseEntity<String> retrieveReservation(@PathVariable int id) {
         String errorResponse;
-        String json = reservationService.getReservationAsJson(id);
+        String json = reservationService.getReservationResponse(id);
         return new ResponseEntity<String>(json, HttpStatus.OK);
     }
 
