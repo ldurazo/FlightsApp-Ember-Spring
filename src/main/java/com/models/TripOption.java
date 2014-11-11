@@ -4,9 +4,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.List;
 
-//TODO ask bany for a better pc or more memory or solid state disk
-
-
+//This is the list of flights QPX format
 public class TripOption {
 
     private List<Slice> slices;

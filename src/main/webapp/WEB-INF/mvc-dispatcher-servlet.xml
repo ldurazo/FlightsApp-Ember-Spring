@@ -19,6 +19,8 @@
 
     <bean class="com.services.ReservationService"> </bean>
 
+    <bean class="com.factories.ConnectorFactory"> </bean>
+
     <bean class="com.services.AutocompleteService"> </bean>
 
     <bean class="com.dao.AirportDao"> </bean>

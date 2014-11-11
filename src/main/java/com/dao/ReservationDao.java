@@ -16,7 +16,7 @@ import java.sql.*;
 import java.util.List;
 
 @Component
-public class ReservationDao implements Recordable {
+public class ReservationDao implements Recordable<Reservation> {
     //TODO ask or investigate if this holder should be injected somehow
     private KeyHolder holder = new GeneratedKeyHolder();
 
@@ -35,10 +35,9 @@ public class ReservationDao implements Recordable {
     }
 
     @Override
-    public int save(Object record) {
-        Reservation reservation = (Reservation) record;
-        saveReservationData(reservation);
-        saveFlightsOfReservation(reservation);
+    public int save(Reservation record) {
+        saveReservationData(record);
+        saveFlightsOfReservation(record);
         return holder.getKey().intValue();
     }
 
@@ -84,7 +83,7 @@ public class ReservationDao implements Recordable {
     }
 
     @Override
-    public Object getRecord(final int id, final String email) {
+    public Reservation getRecord(final int id, final String email) {
         try {
             String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=? AND EMAIL=?";
             Reservation reservation = jdbcTemplate.queryForObject(selectFromReservationsQuery,new Object[]{id,email}, new ReservationRowMapper());

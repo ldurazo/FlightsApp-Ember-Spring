@@ -18,15 +18,18 @@ public class SearchController {
     }
 
     @RequestMapping(value="/search", produces="application/json", method = RequestMethod.POST, headers = "Content-Type=application/json")
-    public @ResponseBody ResponseEntity<String> search(@RequestBody SearchRequest searchRequest) {
+    public @ResponseBody ResponseEntity<String> getAvailableFlights(@RequestBody SearchRequest searchRequest) {
         //TODO this should not be hardcoded, find a way to make it a feature
         searchRequest.setSolutions(10);
-        //Logic to parse the parameters as json
+        //The following search object receives the request from the frontend and converts it to something
+        //that is actually legible by GoogleQPX service
         SearchRequestQpx search = new SearchRequestQpx(searchRequest);
+        //the request is the json created to send to QPX
+        String request = searchService.getJsonStringForRequest(search);
+        //the response makes a call to qpx and retrieves their response.
+        //TODO hardcoded connector name is just not ok fella'
+        String response = searchService.getFlightsAsJsonString(request, "qpx");
 
-        String jsonStringForRequest = searchService.getJsonStringForRequest(search);
-        String jsonResponse = searchService.getFlightsAsJsonString(jsonStringForRequest);
-
-        return new ResponseEntity<String>(jsonResponse, HttpStatus.OK);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 }

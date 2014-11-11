@@ -1,6 +1,7 @@
 package com.services;
 
 import com.dao.ReservationDao;
+import com.models.CustomResponse;
 import com.models.Reservation;
 import com.qpxutils.QpxRestOperator;
 import com.utils.GlobalObjectMapper;
@@ -22,12 +23,25 @@ public class ReservationService {
         this.objectMapper = objectMapper;
     }
 
-    public int saveReservation(Reservation reservation){
-        return reservationDao.save(reservation);
+    public String getReservationCustomResponse(Reservation reservation) {
+        CustomResponse response = new CustomResponse();
+        try {
+            int reservationId = saveReservation(reservation);
+            response.setMessage("your reservation id is: " + reservationId);
+        } catch (Exception e) {
+            response.setMessage(e.getLocalizedMessage());
+        }
+        return objectMapper.objectToJson(response);
+    }
+
+    private int saveReservation(Reservation reservation) throws Exception {
+        int reservationId = 0;
+        reservationId = reservationDao.save(reservation);
+        return reservationId;
     }
 
     public String getReservationResponse(int id, String email) {
-        Reservation reservation = (Reservation) reservationDao.getRecord(id, email);
+        Reservation reservation = reservationDao.getRecord(id, email);
         if(reservation == null){
             Map<String, Object> responseWrapper = new HashMap<String, Object>();
             responseWrapper.put("error", "Reservation not found");

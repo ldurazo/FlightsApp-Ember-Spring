@@ -1,6 +1,5 @@
 package com.controllers;
 
-import com.models.CustomResponse;
 import com.models.Reservation;
 import com.services.ReservationService;
 import com.utils.GlobalObjectMapper;
@@ -23,21 +22,14 @@ public class ReservationController {
 
     @RequestMapping(value = "/reservation", method = RequestMethod.POST, headers = "Content-Type=application/json")
     public ResponseEntity<String> createReservation(@RequestBody Reservation reservation) {
-        int statusSaved = reservationService.saveReservation(reservation);
-        String response;
-        if (statusSaved > 0) {
-            response = objectMapper.objectToJson(new CustomResponse("Reservation saved successfully with id: " + statusSaved + " please keep this number safe"));
-        } else {
-            response = objectMapper.objectToJson(new CustomResponse("Reservation not saved"));
-        }
+        String response = reservationService.getReservationCustomResponse(reservation);
         return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
-    //TODO add email and name as path variables
     @RequestMapping(value = "/reservation/{id}/{email}/", method = RequestMethod.GET)
     public ResponseEntity<String> retrieveReservation(@PathVariable("id") int id, @PathVariable("email") String email) {
-        String json = reservationService.getReservationResponse(id, email);
-        return new ResponseEntity<String>(json, HttpStatus.OK);
+        String response = reservationService.getReservationResponse(id, email);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
 }

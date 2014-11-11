@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SearchControllerTest {
-    private static String uri = "http://localhost:8080/mvn-webapp-flights/search";
+    private static String uri = "http://localhost:8080/mvn-webapp-flights/getAvailableFlights";
     private static TestHttpClient clientForTest;
     private static HttpResponse response;
 
@@ -29,8 +29,8 @@ public class SearchControllerTest {
         System.out.println(response);
     }
 
-    //Dummy link to perform a search with this API change date if it already passed
-    //http://localhost:8080/mvn-webapp-flights/search?origin=SFO&destination=MEX&passengers=1&date=2014-12-19
+    //Dummy link to perform a getAvailableFlights with this API change date if it already passed
+    //http://localhost:8080/mvn-webapp-flights/getAvailableFlights?origin=SFO&destination=MEX&passengers=1&date=2014-12-19
     @Test
     public void searchResultShouldBeOk() throws ClientProtocolException {
         assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);

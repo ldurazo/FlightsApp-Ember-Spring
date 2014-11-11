@@ -1,5 +1,6 @@
 package com.models;
 
+//This class models the requests for flight search from the frontend
 public class SearchRequest {
     private boolean isOneWay;
     private String origin;
