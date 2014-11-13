@@ -1,7 +1,6 @@
 package test;
 
 import com.services.AutocompleteService;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +16,6 @@ public class AutocompleteServiceTest {
 
     @Autowired
     private static AutocompleteService autocompleteService;
-
-    @BeforeClass
-    public static void setUp() throws Exception {
-
-    }
 
     @Test
     public void shouldReturnSuggestions() throws Exception {

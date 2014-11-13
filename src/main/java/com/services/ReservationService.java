@@ -1,6 +1,7 @@
 package com.services;
 
 import com.dao.ReservationDao;
+import com.exceptions.FlightsAppException;
 import com.models.CustomResponse;
 import com.models.Reservation;
 import com.utils.FlightsAppObjectMapper;
@@ -27,14 +28,17 @@ public class ReservationService {
         try {
             int reservationId = saveReservation(reservation);
             response.setMessage("your reservation id is: " + reservationId);
-        } catch (Exception e) {
+        } catch (FlightsAppException e) {
             response.setMessage(e.getLocalizedMessage());
         }
         return objectMapper.objectToJson(response);
     }
 
-    private int saveReservation(Reservation reservation) throws Exception {
+    public int saveReservation(Reservation reservation) throws FlightsAppException {
         int reservationId = reservationDao.save(reservation);
+        if(reservationId < 1){
+            throw new FlightsAppException();
+        }
         return reservationId;
     }
 
