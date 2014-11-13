@@ -21,7 +21,7 @@ public class QpxConnector implements FlightConnector {
     public List<TripOption> getFlights(SearchRequest searchRequest) {
         try {
             String jsonStringForRequest = objectMapper.writeValueAsString(new SearchRequestQpx(searchRequest));
-            String qpxResponse = QpxRestOperator.getFlightsFromQpxAsJsonString(jsonStringForRequest);
+            String qpxResponse = QpxRestOperator.getFlightsFromQpx(jsonStringForRequest);
             JsonNode node = objectMapper.readTree(qpxResponse);
             node = node.get("trips").get("tripOption");
             return objectMapper.readValue(node, objectMapper.getTypeFactory().constructCollectionType(List.class, TripOption.class));

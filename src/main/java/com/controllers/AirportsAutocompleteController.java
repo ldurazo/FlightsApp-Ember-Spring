@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AutocompleteController {
+public class AirportsAutocompleteController {
 
     private AutocompleteService autocompleteService;
 
     @Autowired
-    public AutocompleteController(AutocompleteService autocompleteService) {
+    public AirportsAutocompleteController(AutocompleteService autocompleteService) {
         this.autocompleteService = autocompleteService;
     }
 
     @RequestMapping(value = "/autocomplete", method = RequestMethod.GET)
     public ResponseEntity<String> getAutocompleteInfo(@RequestParam String term){
-        String suggestions = autocompleteService.getAirportSuggestions(term);
-        return new ResponseEntity<String>(suggestions, HttpStatus.OK);
+        String response = autocompleteService.getAirportSuggestions(term);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
 }

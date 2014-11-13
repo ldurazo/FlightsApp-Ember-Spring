@@ -3,7 +3,6 @@ package com.services;
 import com.dao.ReservationDao;
 import com.models.CustomResponse;
 import com.models.Reservation;
-import com.qpxutils.QpxRestOperator;
 import com.utils.FlightsAppObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +34,7 @@ public class ReservationService {
     }
 
     private int saveReservation(Reservation reservation) throws Exception {
-        int reservationId;
-        reservationId = reservationDao.save(reservation);
+        int reservationId = reservationDao.save(reservation);
         return reservationId;
     }
 

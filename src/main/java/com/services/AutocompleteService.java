@@ -2,6 +2,7 @@ package com.services;
 
 import com.dao.AirportDao;
 import com.models.Airport;
+import com.utils.FlightsAppConstants;
 import com.utils.FlightsAppObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class AutocompleteService {
     public String getAirportSuggestions(String userInput){
         List<Airport> airportList = airportDao.getAirportName(userInput);
         if(airportList.isEmpty()){
-            Map<String, Object> responseMap = new HashMap<String, Object>();
-            responseMap.put("Error", "No suggestions found");
+            Map<String, String> responseMap = new HashMap<String, String>();
+            responseMap.put(FlightsAppConstants.ERROR, "No suggestions found");
             return objectMapper.objectToJson(responseMap);
         }
         return objectMapper.objectToJson(airportList);
