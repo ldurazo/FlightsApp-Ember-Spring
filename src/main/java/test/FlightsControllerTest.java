@@ -16,7 +16,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class SearchControllerTest {
+public class FlightsControllerTest {
     private static String uri = "http://localhost:8080/mvn-webapp-flights/getAvailableFlights";
     private static TestHttpClient clientForTest;
     private static HttpResponse response;

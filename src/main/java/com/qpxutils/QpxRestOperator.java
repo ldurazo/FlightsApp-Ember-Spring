@@ -15,7 +15,7 @@ import java.io.InputStream;
 @Component
 public class QpxRestOperator {
 
-    public String getFlightsFromQpxAsJsonString(String jsonStringForRequest){
+    public static String getFlightsFromQpxAsJsonString(String jsonStringForRequest){
         //logic to ask for response to QPX API
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         String qpxResponse = null;

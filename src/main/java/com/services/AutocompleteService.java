@@ -2,7 +2,7 @@ package com.services;
 
 import com.dao.AirportDao;
 import com.models.Airport;
-import com.utils.GlobalObjectMapper;
+import com.utils.FlightsAppObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,13 @@ import java.util.Map;
 
 @Service
 public class AutocompleteService {
-    private GlobalObjectMapper objectMapper;
+    private FlightsAppObjectMapper objectMapper;
 
     @Autowired
     private AirportDao airportDao;
 
     @Autowired
-    public AutocompleteService(GlobalObjectMapper objectMapper) {
+    public AutocompleteService(FlightsAppObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

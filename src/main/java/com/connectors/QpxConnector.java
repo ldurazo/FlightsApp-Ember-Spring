@@ -1,28 +1,27 @@
 package com.connectors;
 
+import com.models.SearchRequest;
+import com.models.SearchRequestQpx;
 import com.models.TripOption;
 import com.qpxutils.QpxRestOperator;
-import com.utils.GlobalObjectMapper;
+import com.utils.FlightsAppObjectMapper;
 import org.codehaus.jackson.JsonNode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 
 public class QpxConnector implements FlightConnector {
-    private GlobalObjectMapper objectMapper;
-    private QpxRestOperator qpxRestOperator;
+    private FlightsAppObjectMapper objectMapper;
 
-    public QpxConnector(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator) {
+    public QpxConnector(FlightsAppObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        this.qpxRestOperator = qpxRestOperator;
     }
 
     @Override
-    public List<TripOption> getFlights(String jsonStringForRequest) {
-        String qpxResponse = qpxRestOperator.getFlightsFromQpxAsJsonString(jsonStringForRequest);
+    public List<TripOption> getFlights(SearchRequest searchRequest) {
         try {
+            String jsonStringForRequest = objectMapper.writeValueAsString(new SearchRequestQpx(searchRequest));
+            String qpxResponse = QpxRestOperator.getFlightsFromQpxAsJsonString(jsonStringForRequest);
             JsonNode node = objectMapper.readTree(qpxResponse);
             node = node.get("trips").get("tripOption");
             return objectMapper.readValue(node, objectMapper.getTypeFactory().constructCollectionType(List.class, TripOption.class));

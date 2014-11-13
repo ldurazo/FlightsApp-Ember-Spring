@@ -2,7 +2,7 @@ package com.controllers;
 
 import com.models.Reservation;
 import com.services.ReservationService;
-import com.utils.GlobalObjectMapper;
+import com.utils.FlightsAppObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class ReservationController {
     public static final String RESERVATION_ENDPOINT = "/reservation";
     private ReservationService reservationService;
-    private GlobalObjectMapper objectMapper;
+    private FlightsAppObjectMapper objectMapper;
 
     @Autowired
-    public ReservationController(ReservationService reservationService, GlobalObjectMapper objectMapper) {
+    public ReservationController(ReservationService reservationService, FlightsAppObjectMapper objectMapper) {
         this.reservationService = reservationService;
         this.objectMapper = objectMapper;
     }

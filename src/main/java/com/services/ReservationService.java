@@ -4,7 +4,7 @@ import com.dao.ReservationDao;
 import com.models.CustomResponse;
 import com.models.Reservation;
 import com.qpxutils.QpxRestOperator;
-import com.utils.GlobalObjectMapper;
+import com.utils.FlightsAppObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +13,13 @@ import java.util.Map;
 
 @Service
 public class ReservationService {
-    private GlobalObjectMapper objectMapper;
+    private FlightsAppObjectMapper objectMapper;
 
     @Autowired
     private ReservationDao reservationDao;
 
     @Autowired
-    public ReservationService(GlobalObjectMapper objectMapper, QpxRestOperator qpxRestOperator) {
+    public ReservationService(FlightsAppObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -35,7 +35,7 @@ public class ReservationService {
     }
 
     private int saveReservation(Reservation reservation) throws Exception {
-        int reservationId = 0;
+        int reservationId;
         reservationId = reservationDao.save(reservation);
         return reservationId;
     }

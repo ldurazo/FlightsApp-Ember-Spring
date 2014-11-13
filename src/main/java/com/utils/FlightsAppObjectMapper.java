@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class GlobalObjectMapper extends ObjectMapper{
+public class FlightsAppObjectMapper extends ObjectMapper{
 
-    public GlobalObjectMapper() {
+    public FlightsAppObjectMapper() {
         this.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.enable(SerializationConfig.Feature.INDENT_OUTPUT);
     }

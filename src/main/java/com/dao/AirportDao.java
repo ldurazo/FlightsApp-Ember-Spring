@@ -1,7 +1,7 @@
 package com.dao;
 
 import com.models.Airport;
-import com.utils.GlobalObjectMapper;
+import com.utils.FlightsAppObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -22,10 +22,10 @@ public class AirportDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private GlobalObjectMapper objectMapper;
+    private FlightsAppObjectMapper objectMapper;
 
     @Autowired
-    public void setDataSource(DataSource dataSource, GlobalObjectMapper objectMapper) {
+    public void setDataSource(DataSource dataSource, FlightsAppObjectMapper objectMapper) {
         this.dataSource = dataSource;
         this.objectMapper = objectMapper;
     }
