@@ -1,8 +1,8 @@
 package com.connectors;
 
+import com.models.QpxRequest.QpxRequest;
 import com.models.SearchRequest;
-import com.models.SearchRequestQpx;
-import com.models.TripOption;
+import com.models.TripOption.TripOption;
 import com.qpxutils.QpxRestOperator;
 import com.utils.FlightsAppObjectMapper;
 import org.codehaus.jackson.JsonNode;
@@ -20,7 +20,7 @@ public class QpxConnector implements FlightConnector {
     @Override
     public List<TripOption> getFlights(SearchRequest searchRequest) {
         try {
-            String jsonStringForRequest = objectMapper.writeValueAsString(new SearchRequestQpx(searchRequest));
+            String jsonStringForRequest = objectMapper.writeValueAsString(new QpxRequest(searchRequest));
             String qpxResponse = QpxRestOperator.getFlightsFromQpx(jsonStringForRequest);
             JsonNode node = objectMapper.readTree(qpxResponse);
             node = node.get("trips").get("tripOption");

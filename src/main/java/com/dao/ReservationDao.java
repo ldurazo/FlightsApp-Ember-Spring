@@ -19,8 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Component
-public class ReservationDao implements Recordable<Reservation> {
-    //TODO ask or investigate if this holder should be injected somehow
+public class ReservationDao{
     private KeyHolder holder = new GeneratedKeyHolder();
 
     private DataSource dataSource;
@@ -37,7 +36,6 @@ public class ReservationDao implements Recordable<Reservation> {
         return dataSource;
     }
 
-    @Override
     public int save(Reservation record) {
         saveReservationData(record);
         saveFlightsOfReservation(record);
@@ -85,7 +83,6 @@ public class ReservationDao implements Recordable<Reservation> {
         }
     }
 
-    @Override
     public Reservation getRecord(final int id, final String email) {
         try {
             String selectFromReservationsQuery = "SELECT * FROM RESERVATIONS WHERE ID=? AND EMAIL=?";

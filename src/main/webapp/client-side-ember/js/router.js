@@ -35,13 +35,13 @@ App.BookedRoute = Ember.Route.extend({
 App.FlightsRoute = Ember.Route.extend({
     model: function() {
         //Uncomment this when consuming the API
-//        return $.post("http://localhost:8080/mvn-webapp-flights/search", searchJson, function(response) {
-//            return response;
-//        }, 'json');
+        return $.post("http://localhost:8080/mvn-webapp-flights/search", searchJson, function(response) {
+            return response;
+        }, 'json');
 
         //dummy json (QPX has limit of requests per day)
-        return $.getJSON("http://www.mocky.io/v2/54506432584e0fee056d0062", function(data){
-            return data;
-        });
+//        return $.getJSON("http://www.mocky.io/v2/54506432584e0fee056d0062", function(data){
+//            return data;
+//        });
     }
 });

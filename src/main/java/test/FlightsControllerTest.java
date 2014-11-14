@@ -1,6 +1,6 @@
 package test;
 
-import com.models.TripOption;
+import com.models.TripOption.TripOption;
 import com.utils.InputStreamProcessor;
 import com.utils.TestHttpClient;
 import org.apache.http.HttpResponse;
