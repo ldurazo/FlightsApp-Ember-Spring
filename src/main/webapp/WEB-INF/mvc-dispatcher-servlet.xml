@@ -15,14 +15,6 @@
 
     <context:component-scan base-package="com" />
 
-    <bean class="com.services.ReservationService"> </bean>
-
-    <bean class="com.factories.ConnectorFactory"> </bean>
-
-    <bean class="com.services.AutocompleteService"> </bean>
-
-    <bean class="com.dao.AirportDao"> </bean>
-
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/" />
         <property name="suffix" value=".jsp" />

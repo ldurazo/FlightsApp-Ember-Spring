@@ -20,8 +20,7 @@ public class FlightsAppObjectMapper extends ObjectMapper{
         try {
             return this.writeValueAsString(object);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 }

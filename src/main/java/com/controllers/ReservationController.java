@@ -2,7 +2,6 @@ package com.controllers;
 
 import com.models.Reservation;
 import com.services.ReservationService;
-import com.utils.FlightsAppObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +11,10 @@ import org.springframework.web.bind.annotation.*;
 public class ReservationController {
     public static final String RESERVATION_ENDPOINT = "/reservation";
     private ReservationService reservationService;
-    private FlightsAppObjectMapper objectMapper;
 
     @Autowired
-    public ReservationController(ReservationService reservationService, FlightsAppObjectMapper objectMapper) {
+    public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
-        this.objectMapper = objectMapper;
     }
 
     @RequestMapping(value = "/reservation", method = RequestMethod.POST, headers = "Content-Type=application/json")

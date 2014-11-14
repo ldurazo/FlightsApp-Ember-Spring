@@ -70,9 +70,16 @@
                 {{#each segment}}
                 {{#each leg}}
                     <div>
+                        <label>Origin airport:</label>
                         <span class="label label-info" id="results-flights">{{origin}}</span>
+                        <br/>
+                        <label>Departure Time:</label>
                         <label id="flight-timestamps">{{departureTime}}</label>
-                        <span class="label label-info" id="results-flights">{{destination}}</span>
+                        <br/>
+                        <label>Destination Airport:</label>
+                        <span class="label label-info" id="results-flights"> {{destination}}</span>
+                        <br/>
+                        <label>Arrival Time:</label>
                         <label id="flight-timestamps">{{arrivalTime}}</label>
                     </div>
                 <hr/>
@@ -87,7 +94,7 @@
             </div>
         </li>
         {{else}}
-        <span class="label label-info" id="results-flights">There was an error, please check your input or maybe it was the server, idk</span>
+        <span class="label label-info" id="results-flights">There was an error, it could be that no flights were found or your input has a problem</span>
         {{/each}}
     </ul>
 </script>
@@ -189,7 +196,7 @@
         </li>
 </script>
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" property="">
 <script src="js/libs/jquery-1.10.2.js"></script>
 <script src="js/libs/jquery-ui.js"></script>
 <script src="js/libs/handlebars-1.1.2.js"></script>

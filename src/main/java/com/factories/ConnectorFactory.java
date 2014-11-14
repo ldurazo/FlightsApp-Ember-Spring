@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ConnectorFactory implements IConnectorFactory{
+public class ConnectorFactory{
     private FlightsAppObjectMapper objectMapper;
 
     @Autowired
@@ -15,7 +15,6 @@ public class ConnectorFactory implements IConnectorFactory{
         this.objectMapper = objectMapper;
     }
 
-    @Override
     public FlightConnector createConnector(String connectorName) {
         if(connectorName.equals("qpx")){
             return new QpxConnector(objectMapper);

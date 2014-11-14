@@ -24,7 +24,7 @@ public class AutocompleteService {
     }
 
     public String getAirportSuggestions(String userInput){
-        List<Airport> airportList = airportDao.getAirportName(userInput);
+        List<Airport> airportList = airportDao.searchAirports(userInput);
         if(airportList.isEmpty()){
             Map<String, String> responseMap = new HashMap<String, String>();
             responseMap.put(FlightsAppConstants.ERROR, "No suggestions found");

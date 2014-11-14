@@ -34,7 +34,7 @@ public class AirportDao {
         return dataSource;
     }
 
-    public List<Airport> getAirportName(final String userInput){
+    public List<Airport> searchAirports(final String userInput){
         final String airportsQuery = " SELECT * FROM AIRPORTS WHERE city ilike ? limit 10";
         PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
             @Override

@@ -1,6 +1,7 @@
 package com.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Reservation {
@@ -35,9 +36,7 @@ public class Reservation {
         this.last_name = last_name;
         this.cost = cost;
         this.email = email;
-        for (Flight f : flights) {
-            this.flights.add(f);
-        }
+        Collections.addAll(this.flights, flights);
     }
 
     public int getId() {
@@ -55,7 +54,7 @@ public class Reservation {
     public void setName(String name) {
         this.name = name;
     }
-
+// todo change last_name
     public String getLast_name() {
         return last_name;
     }
