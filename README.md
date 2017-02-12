@@ -1,4 +1,4 @@
-tetra-flights-ofdevil
+Flights App
 =====================
 
 Nearsoft academy project for talent incubator of Luis Durazo
